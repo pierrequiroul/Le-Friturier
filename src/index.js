@@ -35,15 +35,15 @@ console.log(`\u001b[0m`)
 console.log(chalk.red(`${new Date().getFullYear()}`))
 console.log(`\u001b[0m`)
 console.log(`\u001b[0m`)
-console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`Version ${require(`${process.cwd()}/package.json`).version}`), (chalk.green(`loaded`)))
+console.log(chalk.blue(chalk.bold(`Système`)), (chalk.white(`>>`)), chalk.red(`Version ${require(`${process.cwd()}/package.json`).version}`), (chalk.green(`loaded`)))
 console.log(`\u001b[0m`);
 
 manager.on('shardCreate', shard => {
     let embed = new Discord.MessageEmbed()
         .setTitle(`🆙・Lancement du fragment`)
-        .setDescription(`Un fragment a ete demarre`)
+        .setDescription(`Un fragment a été démarré`)
         .addField("🆔┆ID", `${shard.id + 1}/${manager.totalShards}`, true)
-        .addField(`📃┆Etat`, `Demarrage...`, true)
+        .addField(`📃┆State`, `Démarrage...`, true)
         .setColor(config.colors.normal)
     startLogs.send({
         username: 'Logs bot',
@@ -97,9 +97,7 @@ manager.on('shardCreate', shard => {
             embeds: [embed],
         });
     });
-É});
+});
 
 
 manager.spawn();
-
- 
