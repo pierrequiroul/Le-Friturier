@@ -7,6 +7,9 @@ module.exports = async (client, interaction, args) => {
     const target = interaction.options.getUser('user') || interaction.user;
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
+    temp = "";
+    temp2 = "";
+    i = 0;
     
     for (let i = 0; i < data.Parent.length; i++) {
         temp[i] = "<@!" + data.Children[i] + ">";
