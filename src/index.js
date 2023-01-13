@@ -43,7 +43,7 @@ manager.on('shardCreate', shard => {
         .setTitle(`🆙・Lancement du fragment`)
         .setDescription(`Un fragment a été démarré`)
         .addField("🆔┆ID", `${shard.id + 1}/${manager.totalShards}`, true)
-        .addField(`📃┆État`, `Démarrage...`, true)
+        .addField(`📃┆Etat`, `Démarrage...`, true)
         .setColor(config.colors.normal)
     startLogs.send({
         username: 'Logs bot',
