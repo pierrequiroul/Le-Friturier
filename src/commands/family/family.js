@@ -9,11 +9,11 @@ module.exports = async (client, interaction, args) => {
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
     
     for (int i = 0; i < data.Parent.length; i++) {
-        temp[i] = "<@!" + data.Children[i] + ">"
+        temp[i] = "<@!" + data.Children[i] + ">";
     }
 
     for (int i = 0; i < data.Children.length; i++) {
-        temp2[i] = "<@!" + data.Children[i] + ">"
+        temp2[i] = "<@!" + data.Children[i] + ">";
     }
     
     client.embed({
