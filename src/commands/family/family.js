@@ -7,7 +7,14 @@ module.exports = async (client, interaction, args) => {
     const target = interaction.options.getUser('user') || interaction.user;
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
-    const data2 = await Schema.findOne({ Guild: interaction.guild.id, User: data.Parent });
+    
+    for (int i = 0; i < data.Parent.length; i++) {
+        temp[i] = "<@!" + data.Children[i] + ">"
+    }
+
+    for (int i = 0; i < data.Children.length; i++) {
+        temp2[i] = "<@!" + data.Children[i] + ">"
+    }
     
     client.embed({
         title: `👪・Famille de ${target.username}`,
@@ -19,15 +26,15 @@ module.exports = async (client, interaction, args) => {
             },
             {
                 name: `Parents`,
-                value: `${data && data.Parent.length > 0 ? `<@!${data.Parent}>・` : `Cette personne n'a pas de parents`}`
+                value: `${data && data.Parent.length > 0 ? `${temp.join(", ")}` : `Cette personne n'a pas de parents`}`
             },
             /*{
                 name: `Frères/Soeurs`,
-                value: `${data && data2.Children.length > 0 ? `${data.Children.join(", ")}` : `Cette personne n'a pas d'enfants`}`
+                value: `${data && data.Children.length > 0 ? `${data.Children.join(", ")}` : `Cette personne n'a pas d'enfants`}`
             },*/
             {
                 name: `Enfants`,
-                value: `${data && data.Children.length > 0 ? `<@!${data.Children}>・` : `Cette personne n'a pas d'enfants`}`
+                value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
             }
         ],
         type: 'editreply'
