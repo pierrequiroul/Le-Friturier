@@ -19,7 +19,7 @@ module.exports = async (client, interaction, args) => {
             },
             {
                 name: `Parents`,
-                value: `${data && data.Parent.length > 0 ? `${data.Parent.join(", ")}` : `Cette personne n'a pas de parents`}`
+                value: `${data && data.Parent.length > 0 ? `<@${data.Parent.join(">, ")}` : `Cette personne n'a pas de parents`}`
             },
             /*{
                 name: `Frères/Soeurs`,
