@@ -41,9 +41,9 @@ console.log(`\u001b[0m`);
 manager.on('shardCreate', shard => {
     let embed = new Discord.MessageEmbed()
         .setTitle(`🆙・Lancement du fragment`)
-        .setDescription(`Un fragment a été démarré`)
+        .setDescription(`Un fragment a ete demarre`)
         .addField("🆔┆ID", `${shard.id + 1}/${manager.totalShards}`, true)
-        .addField(`📃┆Etat`, `Démarrage...`, true)
+        .addField(`📃┆Etat`, `Demarrage...`, true)
         .setColor(config.colors.normal)
     startLogs.send({
         username: 'Logs bot',
