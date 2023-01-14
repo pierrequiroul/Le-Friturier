@@ -68,7 +68,12 @@ module.exports = async (client, interaction, args) => {
                 name: `Frères/Soeurs`,
                 value: temp3
             });
-        }
+        } else {
+            fields.push({
+                name: `Frères/Soeurs`,
+                value: `Cette personne n'a pas de frères et soeurs`
+            });    
+        };
 
         fields.push({
                 name: `Enfants`,
