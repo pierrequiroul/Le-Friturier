@@ -28,7 +28,7 @@ module.exports = {
             subcommand
                 .setName('disown')
                 .setDescription('Renier un enfant ou un parent !')
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne).setRequired(true)),
+                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
