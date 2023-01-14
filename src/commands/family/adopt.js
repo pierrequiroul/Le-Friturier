@@ -28,7 +28,7 @@ module.exports = async (client, interaction, args) => {
         }, interaction);
     }
 
-    const checkAdopt = await Schema.findOne({ Guild: interaction.guild.id, Children: target.username });
+    const checkAdopt = await Schema.findOne({ Guild: interaction.guild.id, Children: target.id });
     if (checkAdopt) {
         return client.errNormal({
             error: `Cette personne a été adoptée !`,
@@ -78,7 +78,7 @@ module.exports = async (client, interaction, args) => {
 
             Schema.findOne({ Guild: interaction.guild.id, User: target.id }, async (err, data) => {
                 if (data) {
-                    data.Parent.push(author.username);
+                    data.Parent.push(author.id);
                     data.save();
                 }
                 else {
