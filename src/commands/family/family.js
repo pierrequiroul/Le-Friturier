@@ -12,11 +12,11 @@ module.exports = async (client, interaction, args) => {
     var i = 0;
     
     for (var i = 0; i < data.Parent.length; i++) {
-        var temp[i] = "<@!" + data.Children[i] + ">";
+        temp[i] = "<@!" + data.Children[i] + ">";
     }
 
     for (var i = 0; i < data.Children.length; i++) {
-        var temp2[i] = "<@!" + data.Children[i] + ">";
+        temp2[i] = "<@!" + data.Children[i] + ">";
     }
     
     client.embed({
