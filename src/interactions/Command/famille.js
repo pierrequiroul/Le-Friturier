@@ -11,41 +11,41 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('help')
-                .setDescription('Obtenir des informations à propos des commandes family')
+                .setDescription('Obtenir des informations à propos des commandes famille.')
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('adopter')
-                .setDescription('Adopter un membre !')
+                .setDescription('👨‍👧 Adopter un membre.')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('supprimer')
-                .setDescription('Supprimer ta famille !'),
+                .setDescription('❌ Supprimer ta famille.'),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('renier')
-                .setDescription('Renier un enfant ou un parent !')
+                .setDescription('💔 Renier un enfant ou un parent.')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('divorcer')
-                .setDescription('Divorcer de ton/ta partenaire !')
+                .setDescription('💔 Divorcer de ton/ta partenaire.')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('voir')
-                .setDescription(`Voir la famille d'un membre !`)
+                .setDescription(`👨‍👩‍👦 Voir la famille d'un membre.`)
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(false)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('marier')
-                .setDescription('Marier une personne !')
+                .setDescription('💖 Marier une personne.')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         ),
 
