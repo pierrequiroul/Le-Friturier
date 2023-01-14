@@ -62,8 +62,8 @@ module.exports = async (client, interaction, args) => {
 
                 new Discord.MessageButton()
                     .setCustomId('propose_deny')
-                    .setEmoji('🚫')
-                    .setStyle('DANGER'),
+                    .setEmoji('❌')
+                    .setStyle('Secondary'),
             );
 
         client.embed({

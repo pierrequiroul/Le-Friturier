@@ -14,7 +14,7 @@ module.exports = async (client, interaction, args) => {
             new Discord.MessageButton()
                 .setCustomId('family_stop')
                 .setEmoji('❌')
-                .setStyle('DANGER'),
+                .setStyle('Secondary'),
         );
 
     client.embed({
