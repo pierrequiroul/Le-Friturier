@@ -43,7 +43,7 @@ module.exports = async (client, interaction, args) => {
 
                         Schema.findOne({ Guild: interaction.guild.id, Parent: author.id }, async (err, data) => {
                             if (data) {
-                                data.Parent = null;
+                                data.Parent = [];
                                 data.save();
                             }
                         })
