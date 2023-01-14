@@ -67,7 +67,6 @@ module.exports = async (client, interaction, args) => {
             name: `Famille`,
             value: `Cette personne n'a pas de famille`
         });
-}
 
     client.embed({
         title: `👪・Famille de ${target.username}`,
