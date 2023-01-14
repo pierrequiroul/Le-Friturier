@@ -4,7 +4,7 @@ const Schema = require("../../database/models/family");
 
 module.exports = async (client, interaction, args) => {
 
-    const target = interaction.options.getUser('user');
+    const target = interaction.options.getUser('membre');
     const author = interaction.user;
     const guild = { Guild: interaction.guild.id };
 

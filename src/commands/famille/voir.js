@@ -4,7 +4,7 @@ const Schema = require("../../database/models/family");
 
 module.exports = async (client, interaction, args) => {
 
-    const target = interaction.options.getUser('user') || interaction.user;
+    const target = interaction.options.getUser('membre') || interaction.user;
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
 
@@ -62,7 +62,7 @@ module.exports = async (client, interaction, args) => {
             value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
         });
     client.embed({
-        title: `👪・Famille de ${target.username}`,
+        title: `👪・Famille de <@!${target.id}>`,
         thumbnail: target.avatarURL({ size: 1024 }),
         fields: fields,
         type: 'editreply'

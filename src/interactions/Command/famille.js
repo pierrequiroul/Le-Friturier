@@ -17,7 +17,7 @@ module.exports = {
             subcommand
                 .setName('adopter')
                 .setDescription('👪 Adopter un membre.')
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true))
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true))
         )
         .addSubcommand(subcommand =>
             subcommand
@@ -28,25 +28,25 @@ module.exports = {
             subcommand
                 .setName('renier')
                 .setDescription('💔 Renier un enfant ou un parent.')
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('divorcer')
                 .setDescription('💔 Divorcer de ton/ta partenaire.')
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('voir')
                 .setDescription(`🔎 Voir la famille d'un membre.`)
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(false)),
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(false)),
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('marier')
                 .setDescription('💖 Marier une personne.')
-                .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true)),
         ),
 
     /** 
