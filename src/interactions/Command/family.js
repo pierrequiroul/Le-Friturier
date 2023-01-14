@@ -15,36 +15,36 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('adopt')
+                .setName('adopter')
                 .setDescription('Adopter un membre !')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true))
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('delete')
+                .setName('supprimer')
                 .setDescription('Supprimer ta famille !'),
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('disown')
+                .setName('renier')
                 .setDescription('Renier un enfant ou un parent !')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('divorce')
+                .setName('divorcer')
                 .setDescription('Divorcer de ton/ta partenaire !')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('family')
+                .setName('famille')
                 .setDescription(`Voir la famille d'un membre !`)
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(false)),
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('propose')
+                .setName('marier')
                 .setDescription('Marier une personne !')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true)),
         ),
