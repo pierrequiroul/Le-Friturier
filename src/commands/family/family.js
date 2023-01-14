@@ -8,7 +8,7 @@ module.exports = async (client, interaction, args) => {
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
 
-    family = false;
+    let family = false;
     let temp = [];
     if (data && data.Parent.length > 0) {
         for (let i = 0; i < data.Parent.length; i++) {
