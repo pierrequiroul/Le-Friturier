@@ -40,7 +40,7 @@ module.exports = async (client, interaction, args) => {
             }
         ],
         type: 'editreply'
-    }, interaction, 0)
+    }, interaction, false)
 }
 
  

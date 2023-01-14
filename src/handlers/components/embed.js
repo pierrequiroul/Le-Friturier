@@ -183,7 +183,7 @@ module.exports = (client) => {
         type: type
     }, interaction, authored) {
         if (interaction.guild == undefined) interaction.guild = { id: "0" };
-        if (authored == undefined) authored = { id: "1" };
+        if (authored == undefined) authored = true;
         const functiondata = await Schema.findOne({ Guild: interaction.guild.id })
 
         if (title) embed.setTitle(title);
