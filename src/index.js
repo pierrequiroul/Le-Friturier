@@ -23,6 +23,7 @@ const shardLogs = new Discord.WebhookClient({
 const manager = new Discord.ShardingManager('./src/bot.js', {
     totalShards: 1,
     token: process.env.DISCORD_TOKEN,
+    timeout: -1,
     respawn: true
 });
 
@@ -30,12 +31,11 @@ const manager = new Discord.ShardingManager('./src/bot.js', {
 // const poster = AutoPoster(process.env.TOPGG_TOKEN, manager);
 
 console.clear();
-console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), (chalk.green(`Starting up`)), (chalk.white(`...`)))
+console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), (chalk.green(`Démarrage`)), (chalk.white(`...`)))
 console.log(`\u001b[0m`)
-console.log(chalk.red(`${new Date().getFullYear()}`))
+console.log(chalk.red(`${new Date()}`))
 console.log(`\u001b[0m`)
-console.log(`\u001b[0m`)
-console.log(chalk.blue(chalk.bold(`Système`)), (chalk.white(`>>`)), chalk.red(`Version ${require(`${process.cwd()}/package.json`).version}`), (chalk.green(`loaded`)))
+console.log(chalk.blue(chalk.bold(`Système`)), (chalk.white(`>>`)), chalk.red(`Version ${require(`${process.cwd()}/package.json`).version}`), (chalk.green(`chargée`)))
 console.log(`\u001b[0m`);
 
 manager.on('shardCreate', shard => {
@@ -43,7 +43,7 @@ manager.on('shardCreate', shard => {
         .setTitle(`🆙・Lancement du fragment`)
         .setDescription(`Un fragment a été démarré`)
         .addField("🆔┆ID", `${shard.id + 1}/${manager.totalShards}`, true)
-        .addField(`📃┆State`, `Démarrage...`, true)
+        .addField(`📃┆Etat`, `Démarrage...`, true)
         .setColor(config.colors.normal)
     startLogs.send({
         username: 'Logs bot',
