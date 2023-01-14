@@ -39,7 +39,7 @@ module.exports = async (client, interaction, args) => {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: data.Parent[i] });
                 if(dataParent && dataParent.Children.length > 0) {
                    for (let j = 0; j < dataParent.Children.length; j++) {
-                        if(target.id !== dataParent.Children[i]) {
+                        if(!temp3.includes(dataParent.Children[i]) && data.User !== dataParent.Children[i]) {
                             temp3.push("<@!" + dataParent.Children[i] + ">");
                         };
                     }; 
