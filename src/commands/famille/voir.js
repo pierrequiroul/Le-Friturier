@@ -62,7 +62,7 @@ module.exports = async (client, interaction, args) => {
             value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
         });
     client.embed({
-        title: `👪・Famille de ${target.username.displayName}`,
+        title: `👪・Famille de ${target.username}`,
         thumbnail: target.avatarURL({ size: 1024 }),
         fields: fields,
         type: 'editreply'
