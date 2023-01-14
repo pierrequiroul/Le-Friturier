@@ -49,20 +49,29 @@ module.exports = async (client, interaction, args) => {
         };*/
         
         if (data && data.Parent.length > 0) {
-            let temp3 = [];
+            let temp3 = new Set();
             const parentPromises = data.Parent.map(async parent => {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: parent });
                 if (dataParent && dataParent.Children.length > 0) {
-                    temp3.push(...dataParent.Children.map(child => "<@!" + child + ">"));
+                    for (let i = 0; i < dataParent.Children.length; i++) {
+                        temp3.add("<@!" + dataParent.Children[i] + ">");
+                    }
                 }
             });
             await Promise.all(parentPromises);
             if(data.Parent.length > 1) {
-                temp3[temp3.length - 1] = temp3[temp3.length - 1] + '\n';
+                temp3 = [...temp3].join("\n");
+            } else {
+                temp3 = [...temp3].join(", ");
             }
             fields.push({
                 name: `Frères/Soeurs`,
-                value: `${temp3.join(", ")}`
+                value: temp3
+            });
+        } else {
+            fields.push({
+                name: `Frères/Soeurs`,
+                value: `Cette personne n'a pas de frères et soeurs`
             });
         }
 
