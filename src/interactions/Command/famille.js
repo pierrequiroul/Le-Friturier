@@ -11,12 +11,12 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('help')
-                .setDescription('Obtenir des informations à propos des commandes famille.')
+                .setDescription('❓ Obtenir des informations à propos des commandes famille.')
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('adopter')
-                .setDescription('👨‍👧 Adopter un membre.')
+                .setDescription('👪 Adopter un membre.')
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(true))
         )
         .addSubcommand(subcommand =>
@@ -39,7 +39,7 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('voir')
-                .setDescription(`👨‍👩‍👦 Voir la famille d'un membre.`)
+                .setDescription(`🔎 Voir la famille d'un membre.`)
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(false)),
         )
         .addSubcommand(subcommand =>
