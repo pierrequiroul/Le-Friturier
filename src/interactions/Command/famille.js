@@ -6,7 +6,7 @@ const Schema = require("../../database/models/music");
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('family')
+        .setName('famille')
         .setDescription('Créer ta famille')
         .addSubcommand(subcommand =>
             subcommand
@@ -38,7 +38,7 @@ module.exports = {
         )
         .addSubcommand(subcommand =>
             subcommand
-                .setName('famille')
+                .setName('voir')
                 .setDescription(`Voir la famille d'un membre !`)
                 .addUserOption(option => option.setName('user').setDescription('Sélectionne une personne').setRequired(false)),
         )
