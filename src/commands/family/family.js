@@ -65,7 +65,7 @@ module.exports = async (client, interaction, args) => {
 
     if (!family) fields.push({
             name: `Famille`,
-            value: `Cette personne n'a pas de famille`}
+            value: `Cette personne n'a pas de famille`
         });
 }
 
