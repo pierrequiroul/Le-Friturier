@@ -54,7 +54,7 @@ module.exports = async (client, interaction, args) => {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: parent });
                 if (dataParent && dataParent.Children.length > 0) {
                     for (let i = 0; i < dataParent.Children.length; i++) {
-                        temp3.add("<@!" + dataParent.Children[i] + ">");
+                        if (target.id !== dataParent.Children[i]) temp3.add("<@!" + dataParent.Children[i] + ">");
                     }
                 }
             });
@@ -67,11 +67,6 @@ module.exports = async (client, interaction, args) => {
             fields.push({
                 name: `Frères/Soeurs`,
                 value: temp3
-            });
-        } else {
-            fields.push({
-                name: `Frères/Soeurs`,
-                value: `Cette personne n'a pas de frères et soeurs`
             });
         }
 
