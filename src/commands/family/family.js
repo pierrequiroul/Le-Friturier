@@ -54,7 +54,7 @@ module.exports = async (client, interaction, args) => {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: parent });
                 if (dataParent && dataParent.Children.length > 0) {
                     for (let i = 0; i < dataParent.Children.length; i++) {
-                        if (target.id !== dataParent.Children[i]) temp3.add("<@!" + dataParent.Children[i] + ">");
+                        if (target.id != dataParent.Children[i]) temp3.add("<@!" + dataParent.Children[i] + ">");
                     }
                 }
             });
@@ -76,9 +76,9 @@ module.exports = async (client, interaction, args) => {
         };
 
         fields.push({
-                name: `Enfants`,
-                value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
-            });
+            name: `Enfants`,
+            value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
+        });
     client.embed({
         title: `👪・Famille de ${target.username}`,
         thumbnail: target.avatarURL({ size: 1024 }),
