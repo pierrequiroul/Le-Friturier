@@ -7,16 +7,15 @@ module.exports = async (client, interaction, args) => {
     const target = interaction.options.getUser('user') || interaction.user;
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
-    var temp = "";
-    var temp2 = "";
-    var i = 0;
-    
-    for (var i = 0; i < data.Parent.length; i++) {
-        temp.append("<@!" + data.Children[i] + ">");
+    let temp = [];
+    let temp2 = [];
+
+    for (let i = 0; i < data.Parent.length; i++) {
+        temp.push("<@!" + data.Children[i] + ">");
     }
 
-    for (var i = 0; i < data.Children.length; i++) {
-        temp2.append("<@!" + data.Children[i] + ">");
+    for (let i = 0; i < data.Children.length; i++) {
+        temp2.push("<@!" + data.Children[i] + ">");
     }
     
     client.embed({
