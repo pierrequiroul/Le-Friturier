@@ -7,15 +7,18 @@ module.exports = async (client, interaction, args) => {
     const target = interaction.options.getUser('user') || interaction.user;
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
-    let temp = [];
-    let temp2 = [];
 
-    for (let i = 0; i < data.Parent.length; i++) {
-        temp.push("<@!" + data.Parent[i] + ">");
+    if (data && data.Parent.length > 0) {
+        let temp = [];
+        for (let i = 0; i < data.Parent.length; i++) {
+            temp.push("<@!" + data.Parent[i] + ">");
+        }
     }
-
-    for (let i = 0; i < data.Children.length; i++) {
-        temp2.push("<@!" + data.Children[i] + ">");
+    if (data && data.Children.length > 0) {
+        let temp2 = [];
+        for (let i = 0; i < data.Children.length; i++) {
+            temp2.push("<@!" + data.Children[i] + ">");
+        }
     }
     
     let fields = [{
