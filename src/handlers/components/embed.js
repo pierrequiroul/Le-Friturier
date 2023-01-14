@@ -183,7 +183,7 @@ module.exports = (client) => {
         type: type
     }, interaction, authored) {
         if (interaction.guild == undefined) interaction.guild = { id: "0" };
-        if (authored == undefined) authored = true;
+        if (typeof authored === 'undefined') authored = true;
         const functiondata = await Schema.findOne({ Guild: interaction.guild.id })
 
         if (title) embed.setTitle(title);
@@ -192,7 +192,7 @@ module.exports = (client) => {
         if (image) embed.setImage(image);
         if (thumbnail) embed.setThumbnail(thumbnail);
         if (fields) embed.addFields(fields);
-        if (authored) if (author) embed.setAuthor(author);
+        if (authored && author) embed.setAuthor(author);
         if (url) embed.setURL(url);
         if (footer) embed.setFooter(footer);
         if (color) embed.setColor(color);
