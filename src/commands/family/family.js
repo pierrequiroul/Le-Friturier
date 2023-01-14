@@ -48,17 +48,15 @@ module.exports = async (client, interaction, args) => {
                 temp3.add("\n");
             } 
             temp3 = [...temp3].join(", ");
-            fields.push({
-                name: `Frères/Soeurs`,
-                value: temp3
-            });
+            
         } else {
-            fields.push({
-                name: `Frères/Soeurs`,
-                value: `Cette personne n'a pas de frères et soeurs`
-            });
-        }
-
+            temp3 = `Cette personne n'a pas de frères et soeurs`
+        };
+    
+        fields.push({
+            name: `Frères/Soeurs`,
+            value: temp3
+        });
         fields.push({
             name: `Enfants`,
             value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
