@@ -12,7 +12,7 @@ module.exports = async (client, interaction, args) => {
     var i = 0;
     
     for (var i = 0; i < data.Parent.length; i++) {
-        temp.append()"<@!" + data.Children[i] + ">");
+        temp.append("<@!" + data.Children[i] + ">");
     }
 
     for (var i = 0; i < data.Children.length; i++) {
