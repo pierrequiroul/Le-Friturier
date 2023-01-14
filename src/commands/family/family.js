@@ -37,11 +37,14 @@ module.exports = async (client, interaction, args) => {
             let temp3 = [];
             for (let i = 0; i < data.Parent.length; i++) {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: data.Parent[i] });
-                for (let j = 0; j < dataParent.Children.length; j++) {
-                    if(!temp3.includes(dataParent.Children[i]) && target.id !== dataParent.Children[i]) {
-                        temp3.push("<@!" + dataParent.Children[i] + ">");
-                    };
+                if(dataParent && dataParent.Children.length > 0) {
+                   for (let j = 0; j < dataParent.Children.length; j++) {
+                        if(!temp3.includes(dataParent.Children[i]) && target.id !== dataParent.Children[i]) {
+                            temp3.push("<@!" + dataParent.Children[i] + ">");
+                        };
+                    }; 
                 };
+                
                 if(data.Parent.length > 1) {
                     temp3[temp3.length - 1] = temp3[temp3.length - 1] + '\n';
                 }
