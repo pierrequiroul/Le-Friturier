@@ -33,36 +33,19 @@ module.exports = async (client, interaction, args) => {
         ];
 
         // Check siblings
-        /*if (data && data.Parent.length > 0) {
+        if (data && data.Parent.length > 0) {
             let temp3 = [];
             for (let i = 0; i < data.Parent.length; i++) {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: data.Parent[i] });
                 for (let j = 0; j < dataParent.Children.length; j++) {
-                    temp3.push("<@!" + dataParent.Children[i] + ">");
+                    if(!temp3.includes(dataParent.Children[i]) && target.id !== dataParent.Children[i]) {
+                        temp3.push("<@!" + dataParent.Children[i] + ">");
+                    };
                 };
-                temp3[j].concat("\n");
-            };
-            fields.push({
-                name: `Frères/Soeurs`,
-                value: `${temp3.join(", ")}`
-            });
-        };*/
-        
-        if (data && data.Parent.length > 0) {
-            let temp3 = [];
-            const parentPromises = data.Parent.map(async parent => {
-                const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: parent });
-                if (dataParent && dataParent.Children.length > 0) {
-                    for (let i = 0; i < dataParent.Children.length; i++) {
-                        const child = dataParent.Children[i];
-                        if (!temp3.includes(child) && target.id !== child) temp3.push("<@!" + child + ">");
-                    }
+                if(data.Parent.length > 1) {
+                    temp3[temp3.length - 1] = temp3[temp3.length - 1] + '\n';
                 }
-            });
-            await Promise.all(parentPromises);
-            if(data.Parent.length > 1) {
-                temp3[temp3.length - 1] = temp3[temp3.length - 1] + '\n';
-            }
+            };
             fields.push({
                 name: `Frères/Soeurs`,
                 value: `${temp3.join(", ")}`
