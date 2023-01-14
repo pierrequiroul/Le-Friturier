@@ -8,17 +8,17 @@ module.exports = async (client, interaction, args) => {
 
     const data = await Schema.findOne({ Guild: interaction.guild.id, User: target.id });
 
-    let temp = [];
+    let parents = [];
     if (data && data.Parent.length > 0) {
         for (let i = 0; i < data.Parent.length; i++) {
-            temp.push("<@!" + data.Parent[i] + ">");
+            parents.push("<@!" + data.Parent[i] + ">");
         }
     }
-    let temp2 = [];
+    let children = [];
     if (data && data.Children.length > 0) {
 
         for (let i = 0; i < data.Children.length; i++) {
-            temp2.push("<@!" + data.Children[i] + ">");
+            children.push("<@!" + data.Children[i] + ">");
         }
     }
     
@@ -28,38 +28,38 @@ module.exports = async (client, interaction, args) => {
             },
             {
                 name: `Parents`,
-                value: `${data && data.Parent.length > 0 ? `${temp.join(", ")}` : `Cette personne n'a pas de parents`}`
+                value: `${data && data.Parent.length > 0 ? `${parents.join(", ")}` : `Cette personne n'a pas de parents`}`
             }
         ];
 
         // Check siblings
         if (data && data.Parent.length > 0) {
-            let temp3 = new Set();
+            let siblings = new Set();
             const parentPromises = data.Parent.map(async parent => {
                 const dataParent = await Schema.findOne({ Guild: interaction.guild.id, User: parent });
                 if (dataParent && dataParent.Children.length > 0) {
                     for (let i = 0; i < dataParent.Children.length; i++) {
-                        if (target.id !== dataParent.Children[i]) temp3.add("<@!" + dataParent.Children[i] + ">");
+                        if (target.id !== dataParent.Children[i]) siblings.add("<@!" + dataParent.Children[i] + ">");
                     }
                 }
             });
             await Promise.all(parentPromises);
             if(data.Parent.length > 1) {
-                temp3.add("\n");
+                siblings.add("\n");
             } 
-            temp3 = [...temp3].join(", ");
+            siblings = [...siblings].join(", ");
             
         } else {
-            temp3 = `Cette personne n'a pas de frères et soeurs`
+            siblings = `Cette personne n'a pas de frères et soeurs`
         };
     
         fields.push({
             name: `Frères/Soeurs`,
-            value: temp3
+            value: siblings
         });
         fields.push({
             name: `Enfants`,
-            value: `${data && data.Children.length > 0 ? `${temp2.join(", ")}` : `Cette personne n'a pas d'enfants`}`
+            value: `${data && data.Children.length > 0 ? `${children.join(", ")}` : `Cette personne n'a pas d'enfants`}`
         });
     client.embed({
         title: `👪・Famille de ${target.username}`,

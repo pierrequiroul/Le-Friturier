@@ -47,6 +47,12 @@ module.exports = {
                 .setName('marier')
                 .setDescription('💖 Marier une personne.')
                 .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true)),
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('arbre')
+                .setDescription('🌳 Voir l\'arbre généalogique')
+                .addUserOption(option => option.setName('membre').setDescription('Sélectionne une personne').setRequired(true)),
         ),
 
     /** 
