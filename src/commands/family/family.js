@@ -69,7 +69,7 @@ module.exports = async (client, interaction, args) => {
     client.embed({
         title: `👪・Famille de ${target.username}`,
         thumbnail: target.avatarURL({ size: 1024 }),
-        fields: fields;
+        fields: fields
         ],
         type: 'editreply'
     }, interaction, false)
