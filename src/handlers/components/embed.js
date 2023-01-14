@@ -37,7 +37,7 @@ module.exports = (client) => {
     }, interaction) {
         embed.setTitle(`${client.emotes.normal.error}・Erreur!`)
         embed.setDescription(`Quelque chose a mal tourné !`)
-        embed.addfields({value:'💬┇Commentaire", `\`\`\`${error}\`\`\``'})
+        embed.addField("💬┇Commentaire", `\`\`\`${error}\`\`\``)
         embed.setColor(client.config.colors.error)
 
         return client.sendEmbed({
@@ -58,7 +58,7 @@ module.exports = (client) => {
     }, interaction) {
         embed.setTitle(`${client.emotes.normal.error}・Erreur!`)
         embed.setDescription(`Tu n'as pas fourni de variables correctes`)
-        embed.addfields({value:'💬┇Variables requises", `\`\`\`${usage}\`\`\``'})
+        embed.addField("💬┇Variables requises", `\`\`\`${usage}\`\`\``)
         embed.setColor(client.config.colors.error)
 
         return client.sendEmbed({
@@ -80,7 +80,7 @@ module.exports = (client) => {
     }, interaction) {
         embed.setTitle(`${client.emotes.normal.error}・Erreurr!`)
         embed.setDescription(`Tu n'as pas suffisamment de permissions`)
-        embed.addfields({value:'🔑┇Permission requise", `\`\`\`${perms}\`\`\``'})
+        embed.addField("🔑┇Permission requise", `\`\`\`${perms}\`\`\``)
         embed.setColor(client.config.colors.error)
 
         return client.sendEmbed({
@@ -102,7 +102,7 @@ module.exports = (client) => {
     }, interaction) {
         embed.setTitle(`${client.emotes.normal.error}・Erreur!`)
         embed.setDescription(`Je n'ai pas les bonnes permissions`)
-        embed.addfields({value:'🔑┇Permission requise", `\`\`\`${perms}\`\`\``'})
+        embed.addField("🔑┇Permission requise", `\`\`\`${perms}\`\`\``)
         embed.setColor(client.config.colors.error)
 
         return client.sendEmbed({
@@ -124,7 +124,7 @@ module.exports = (client) => {
     }, interaction) {
         embed.setTitle(`${client.emotes.normal.error}・Erreur!`)
         embed.setDescription(`Tu as déjà fais cette commande une fois`)
-        embed.addfields({value:'⏰┇Essaye à nouveau", `<t:${time}:f>`'})
+        embed.addField("⏰┇Essaye à nouveau", `<t:${time}:f>`)
         embed.setColor(client.config.colors.error)
 
         return client.sendEmbed({
