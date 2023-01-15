@@ -26,6 +26,7 @@
   "author": "CorwinDev",
   "license": "ISC",
   "dependencies": {
+    "@oo-ascii-tree": "^1.73.0",
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.7.5",
