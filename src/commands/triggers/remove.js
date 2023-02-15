@@ -1,10 +1,10 @@
 const Discord = require('discord.js');
 
 const Schema = require("../../database/models/triggers");
-const { blacklistedWords } = require("../../Collection");
+const { triggersWords } = require("../../Collection");
 
 module.exports = async (client, interaction, args) => {
-    const word = interaction.options.getString('nom');
+    const nom = interaction.options.getString('nom');
 
     Schema.findOne({ Guild: interaction.guild.id, Trigger: nom }, async (err, data) => {
         if (data) {
@@ -23,7 +23,7 @@ module.exports = async (client, interaction, args) => {
                 Words: filtered
             });*/
 
-            triggersWords.set(interaction.guild.id, filtered)
+            triggersWords.set(interaction.guild.id, nom)
 
             client.succNormal({
                 text: `Ce mot a été retiré de la liste noire !`,

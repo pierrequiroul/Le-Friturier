@@ -14,6 +14,13 @@ module.exports = {
                 .addStringOption(option => option.setName('nom').setDescription('z').setRequired(true))
                 .addStringOption(option => option.setName('regex').setDescription('z').setRequired(true))
         )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('remove')
+                .setDescription('z')
+                .addStringOption(option => option.setName('nom').setDescription('z').setRequired(true))
+        )
+    
     ,
 
     /** 
