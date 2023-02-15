@@ -11,6 +11,7 @@ const levelRewards = require("../../database/models/levelRewards");
 const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
+const { triggersWords } = require("../../Collection");
 
 module.exports = async (client, message) => {
   const dmlog = new Discord.WebhookClient({
@@ -41,8 +42,8 @@ module.exports = async (client, message) => {
     });
   }
     // Triggers
-
-
+triggers = triggersWords.map();
+console.log(chalk.blue(chalk.bold(triggers)));
 
 
 
