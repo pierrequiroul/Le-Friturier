@@ -40,6 +40,12 @@ module.exports = async (client, message) => {
       embeds: [embedLogs],
     });
   }
+    // Triggers
+const collection = await db.getCollection("triggers-list");
+
+
+
+
 
   // Levels
   Functions.findOne({ Guild: message.guild.id }, async (err, data) => {

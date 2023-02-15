@@ -6,7 +6,7 @@ const { triggersWords } = require("../../Collection");
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
     const regex = interaction.options.getString('regex');
-
+    const response = interaction.options.getString('response');
     
     Schema.findOne({ Guild: interaction.guild.id, Trigger: nom }, async (err, data) => {
         if (data) {

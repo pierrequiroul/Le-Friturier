@@ -10,15 +10,16 @@ module.exports = {
         .addSubcommand(subcommand =>
             subcommand
                 .setName('add')
-                .setDescription('z')
-                .addStringOption(option => option.setName('nom').setDescription('z').setRequired(true))
-                .addStringOption(option => option.setName('regex').setDescription('z').setRequired(true))
+                .setDescription('Ajouter un déclencheur')
+                .addStringOption(option => option.setName('nom').setDescription('Nom du déclencheur').setRequired(true))
+                .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
+                .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(true))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('remove')
-                .setDescription('z')
-                .addStringOption(option => option.setName('nom').setDescription('z').setRequired(true))
+                .setDescription('Supprimer un déclencheur')
+                .addStringOption(option => option.setName('nom').setDescription('Nom du déclencheur').setRequired(true))
         )
     
     ,
