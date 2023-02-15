@@ -1,17 +1,14 @@
 const Discord = require("discord.js");
 
-const Functions = require("../../database/models/functions");
-const messagesSchema = require("../../database/models/messages");
+module.exports = async (client, message) => {
+  const dmlog = new Discord.WebhookClient({
+    id: client.webhooks.dmLogs.id,
+    token: client.webhooks.dmLogs.token,
+  });
 
-const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-});
+  if (message.author.bot) return;
 
 const triggerWords = ['banana', 'fire', 'white'];
-
-client.on('messageCreate', (message) => {
-  if (message.author.bot) return false;
-
   triggerWords.forEach((word) => {
     if (message.content.includes(word)) {
       message.reply(message.content);
