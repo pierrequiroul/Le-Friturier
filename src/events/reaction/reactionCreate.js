@@ -14,5 +14,5 @@ const triggerWords = ['banana', 'fire', 'white'];
       message.reply(message.content);
     }
   });
-});
+};
 
