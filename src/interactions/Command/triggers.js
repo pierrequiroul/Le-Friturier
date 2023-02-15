@@ -6,13 +6,13 @@ const Discord = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('triggers')
-        .setDescription('')
+        .setDescription('z')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('add')
-                .setDescription('')
-                .addStringOption(option => option.setName('nom').setDescription('').setRequired(true))
-                .addStringOption(option => option.setName('regex').setDescription('').setRequired(true))
+                .setDescription('z')
+                .addStringOption(option => option.setName('nom').setDescription('z').setRequired(true))
+                .addStringOption(option => option.setName('regex').setDescription('z').setRequired(true))
         )
     ,
 
