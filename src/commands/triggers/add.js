@@ -27,7 +27,7 @@ module.exports = async (client, interaction, args) => {
                 Guild: interaction.guild.id,
                 Trigger: nom,
                 Regex: regex,
-                Reponse: response
+                Response: response
             }).save();
 
             triggersWords.set(interaction.guild.id, [nom]);
