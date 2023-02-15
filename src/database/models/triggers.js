@@ -4,6 +4,7 @@ const Schema = new mongoose.Schema({
     Guild: String,
     Trigger: String,
     Regex: String,
+    Response: String,
     Active: { type: Boolean, default: true }
 });
 

@@ -18,6 +18,7 @@ module.exports = async (client, interaction, args) => {
             }
             data.Trigger = nom;
             data.Regex = regex;
+            data.Response = response;
             data.save();
             triggersWords.get(interaction.guild.id).push(nom);
         }
