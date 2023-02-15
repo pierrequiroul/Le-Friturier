@@ -7,6 +7,7 @@ module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
     const regex = interaction.options.getString('regex');
 
+    
     Schema.findOne({ Guild: interaction.guild.id, Trigger: nom }, async (err, data) => {
         if (data) {
             if (data.Trigger == nom) {
@@ -27,7 +28,7 @@ module.exports = async (client, interaction, args) => {
                 Regex: regex
             }).save();
 
-            triggersWords.set(interaction.guild.id, [word]);
+            triggersWords.set(interaction.guild.id, [nom]);
         }
     })
 
@@ -36,7 +37,7 @@ module.exports = async (client, interaction, args) => {
         fields: [
             {
                 name: `<:uo_BotEvent:1015565719330627584> Mot`,
-                value: `${word}`
+                value: `${nom}`
             }
         ],
         type: 'editreply'
