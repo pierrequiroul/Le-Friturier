@@ -20,7 +20,7 @@ module.exports = async (client, interaction, args) => {
             data.Regex = regex;
             data.Response = response;
             data.save();
-            triggersWords.get(interaction.guild.id).push(nom);
+            triggersWords.get(nom).push(nom);
         }
         else {
             new Schema({
@@ -30,7 +30,7 @@ module.exports = async (client, interaction, args) => {
                 Response: response
             }).save();
 
-            triggersWords.add(interaction.guild.id, nom);
+            triggersWords.set(nom, nom);
         }
     })
 

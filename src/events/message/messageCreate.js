@@ -43,7 +43,7 @@ module.exports = async (client, message) => {
   }
     // Triggers
 triggers = triggersWords.map();
-console.log(chalk.blue(chalk.bold(triggers)));
+console.log(chalk.blue(chalk.bold(triggers[0].Trigger)));
 
 
 

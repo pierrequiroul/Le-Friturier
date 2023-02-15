@@ -23,7 +23,7 @@ module.exports = async (client, interaction, args) => {
                 Words: filtered
             });*/
 
-            triggersWords.delete(interaction.guild.id, nom)
+            triggersWords.delete(nom, nom)
 
             client.succNormal({
                 text: `Ce mot a été retiré de la liste noire !`,
