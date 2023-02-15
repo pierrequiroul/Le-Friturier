@@ -41,7 +41,6 @@ module.exports = async (client, message) => {
     });
   }
     // Triggers
-const collection = await db.getCollection("triggers-list");
 
 
 
