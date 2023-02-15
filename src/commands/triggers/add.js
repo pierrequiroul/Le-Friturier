@@ -26,7 +26,8 @@ module.exports = async (client, interaction, args) => {
             new Schema({
                 Guild: interaction.guild.id,
                 Trigger: nom,
-                Regex: regex
+                Regex: regex,
+                Reponse: response
             }).save();
 
             triggersWords.set(interaction.guild.id, [nom]);
