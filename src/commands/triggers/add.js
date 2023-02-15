@@ -30,7 +30,7 @@ module.exports = async (client, interaction, args) => {
                 Response: response
             }).save();
 
-            triggersWords.set(interaction.guild.id, [nom]);
+            triggersWords.add(interaction.guild.id, nom);
         }
     })
 
