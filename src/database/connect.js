@@ -16,11 +16,11 @@ async function connect() {
     mongoose.connection.once("open", () => {
         console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`))
         
-        mongoose.connection.db.collection("triggers-words", function(err, collection){
-            collection.find({}).toArray(function(err, data){
-                console.log(data); // it will print your collection data
-            })
-        });
+        
+          const collection  = mongoose.connection.db.collection("triggers-words");
+          collection.find({}).toArray(function(err, data){
+              console.log(data); // it will print your collection data
+          });
     });
     
     return;
