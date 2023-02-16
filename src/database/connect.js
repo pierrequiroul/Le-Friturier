@@ -6,7 +6,7 @@ async function connect() {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    const triggerWords;
+    const triggerWords = "";
     
     
     
