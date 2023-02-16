@@ -87,7 +87,7 @@ for (const file of events) {
 require("./database/connect")();
 
 // Populate from database
-require("./database/populate")();
+//require("./database/populate")();
 
 
 // Client settings
