@@ -17,7 +17,7 @@ async function connect() {
         console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`))
         
         mongoose.connection.db.collection("triggers-words", function(err, collection){
-            mongoose.collection.find({}).toArray(function(err, data){
+            collection.find({}).toArray(function(err, data){
                 console.log(data); // it will print your collection data
             })
         });
