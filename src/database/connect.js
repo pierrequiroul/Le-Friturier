@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
+const triggerWords = "";
 
 async function connect() {
     mongoose.connect(process.env.MONGO_TOKEN, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-    const triggerWords = "";
+    
     
     
     
