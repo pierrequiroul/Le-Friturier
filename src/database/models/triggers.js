@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = new mongoose.Schema({
     Guild: String,
-    Trigger: String,
+    triggerName: String,
     Regex: String,
     Response: String,
     Active: { type: Boolean, default: true }

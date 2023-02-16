@@ -6,18 +6,18 @@ const { triggersWords } = require("../../Collection");
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
 
-    Schema.findOne({ Guild: interaction.guild.id, Trigger: nom }, async (err, data) => {
+    Schema.findOne({ Guild: interaction.guild.id, triggerName: nom }, async (err, data) => {
         if (data) {
-            if (!data.Trigger == nom) {
+            if (!data.triggerName == nom) {
                 return client.errNormal({
-                    error: `Ce mot n'existe pas dans la base de données !`,
+                    error: `Ce trigger n'existe pas dans la base de données !`,
                     type: 'editreply'
                 }, interaction);
             }
 
             //const filtered = data.Words.filter((target) => target !== word);
             
-            await Schema.findOneAndDelete({Guild: interaction.guild.id, Trigger: nom });
+            await Schema.findOneAndDelete({Guild: interaction.guild.id, triggerName: nom });
             /*await Schema.findOneAndUpdate({  }, {
                 Guild: interaction.guild.id,
                 Words: filtered
@@ -26,10 +26,10 @@ module.exports = async (client, interaction, args) => {
             triggersWords.delete(nom, nom)
 
             client.succNormal({
-                text: `Ce mot a été retiré de la liste noire !`,
+                text: `Ce trigger a été ajouté`,
                 fields: [
                     {
-                        name: `<:uo_BotEvent:1015565719330627584> ┆ Mot`,
+                        name: `:dart: ┆ Trigger`,
                         value: `${nom}`
                     }
                 ],

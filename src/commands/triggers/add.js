@@ -8,15 +8,15 @@ module.exports = async (client, interaction, args) => {
     const regex = interaction.options.getString('regex');
     const response = interaction.options.getString('response');
     
-    Schema.findOne({ Guild: interaction.guild.id, Trigger: nom }, async (err, data) => {
+    Schema.findOne({ Guild: interaction.guild.id, triggerName: nom }, async (err, data) => {
         if (data) {
-            if (data.Trigger == nom) {
+            if (data.triggerName == nom) {
                 return client.errNormal({ 
-                    error: `Ce trigger existe déjà dans la base de donnée!`,
+                    error: `Ce trigger existe déjà et a été mis à jour avec les nouveaux paramètres ! Le regex précédent était ${data.Regex}`,
                     type: 'editreply' 
                 }, interaction);
             }
-            data.Trigger = nom;
+            data.triggerName = nom;
             data.Regex = regex;
             data.Response = response;
             data.save();
@@ -25,7 +25,7 @@ module.exports = async (client, interaction, args) => {
         else {
             new Schema({
                 Guild: interaction.guild.id,
-                Trigger: nom,
+                triggerName: nom,
                 Regex: regex,
                 Response: response
             }).save();
@@ -35,10 +35,10 @@ module.exports = async (client, interaction, args) => {
     })
 
     client.succNormal({
-        text: `Le mot est ajouté à la liste des déclencheur.`,
+        text: `Le mot est ajouté à la liste des trigger.`,
         fields: [
             {
-                name: `<:uo_BotEvent:1015565719330627584> Mot`,
+                name: `:dart: ┆ Trigger`,
                 value: `${nom}`
             }
         ],

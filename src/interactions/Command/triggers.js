@@ -6,20 +6,20 @@ const Discord = require('discord.js');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('triggers')
-        .setDescription('z')
+        .setDescription('Réponse automatique à un mot trigger basé sur un filtre Regex')
         .addSubcommand(subcommand =>
             subcommand
                 .setName('add')
-                .setDescription('Ajouter un déclencheur')
+                .setDescription('Ajouter un trigger')
                 .addStringOption(option => option.setName('nom').setDescription('Nom du déclencheur').setRequired(true))
-                .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
+                .addStringOption(option => option.setName('regex').setDescription('Filtre Regex').setRequired(true))
                 .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(true))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('remove')
-                .setDescription('Supprimer un déclencheur')
-                .addStringOption(option => option.setName('nom').setDescription('Nom du déclencheur').setRequired(true))
+                .setDescription('Supprimer un trigger')
+                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
         )
     
     ,
