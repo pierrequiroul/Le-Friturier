@@ -12,4 +12,3 @@ async function populate() {
 
 
 module.exports = populate
-module.exports = trigWord
