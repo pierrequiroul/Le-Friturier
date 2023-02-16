@@ -6,7 +6,7 @@ async function connect() {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
-
+    const triggerWords;
     
     
     
@@ -18,9 +18,9 @@ async function connect() {
         
         
           const collection  = mongoose.connection.db.collection("triggers-words");
-          collection.find({}).toArray(function(err, triggerWords){
-              console.log(triggerWords); // it will print your collection data
-
+          collection.find({}).toArray(function(err, data){
+              console.log(data); // it will print your collection data
+              triggerWords = data;
           });
     });
     
