@@ -1,5 +1,10 @@
 const Discord = require('discord.js');
 const chalk = require('chalk');
+
+const { triggersWords } = require("../../Collection");
+const fs = require('fs');
+
+
 require('dotenv').config();
 const express = require('express')
 const app = express()
@@ -37,6 +42,27 @@ console.log(chalk.red(`${new Date()}`))
 console.log(`\u001b[0m`)
 console.log(chalk.blue(chalk.bold(`Système`)), (chalk.white(`>>`)), chalk.red(`Version ${require(`${process.cwd()}/package.json`).version}`), (chalk.green(`chargée`)))
 console.log(`\u001b[0m`);
+
+
+// json data
+var jsonData = triggersWords.map();
+ 
+// parse json
+var jsonObj = JSON.parse(jsonData);
+console.log(jsonObj);
+ 
+// stringify JSON Object
+var jsonContent = JSON.stringify(jsonObj);
+console.log(jsonContent);
+ 
+fs.writeFile("output.json", jsonContent, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+ 
+    console.log("JSON file has been saved.");
+});
 
 manager.on('shardCreate', shard => {
     let embed = new Discord.MessageEmbed()
