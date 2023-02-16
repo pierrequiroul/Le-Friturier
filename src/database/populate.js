@@ -1,7 +1,12 @@
-const mongoose = require('mongoose');
+/*const mongoose = require('mongoose');
 const chalk = require('chalk');
 
 async function populate() {
+    function find (name, query, cb) {
+    mongoose.connection.db.collection(name, function (err, collection) {
+       collection.find(query).toArray(cb);
+   });
+}
     const trigWord = mongoose.Collection("triggers-words");
     
     
@@ -10,4 +15,4 @@ async function populate() {
 }
 
 
-module.exports = populate
+module.exports = populate*/
