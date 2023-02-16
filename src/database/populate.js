@@ -6,6 +6,7 @@ async function populate() {
     
     
     console.log(chalk.blue(trigWord[0].Trigger));
+    return;
 }
 
 
