@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const chalk = require('chalk');
-const triggerWords = "";
 
 async function connect() {
     mongoose.connect(process.env.MONGO_TOKEN, {
@@ -21,13 +20,10 @@ async function connect() {
           const collection  = mongoose.connection.db.collection("triggers-words");
           collection.find({}).toArray(function(err, data){
               console.log(data); // it will print your collection data
-              triggerWords = data;
           });
     });
     
-    return;
+    return data;
 }
 
-
 module.exports = connect;
-module.exports = triggerWords;

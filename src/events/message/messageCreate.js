@@ -11,7 +11,7 @@ const levelRewards = require("../../database/models/levelRewards");
 const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
-const { triggerWords } = require('../../database/connect');
+const { triggerWords } = require('../../bot.js');
 
 
 module.exports = async (client, message) => {

@@ -84,8 +84,8 @@ for (const file of events) {
 };
 
 // Connect to database
-require("./database/connect")();
-
+const triggerWords = require("./database/connect")();
+module.exports = triggerWords;
 // Populate from database
 //require("./database/populate")();
 
