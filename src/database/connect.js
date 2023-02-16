@@ -21,6 +21,6 @@ async function connect() {
                 console.log(data); // it will print your collection data
             })
         });
-    }
+    });
     return;
 }
