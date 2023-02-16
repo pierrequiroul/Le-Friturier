@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
     if (message.attachments.size > 0)
       embedLogs.addField(
         `📃┆Attachments`,
-        `${message.attachments.first()?.url},
+        `${message.attachments.first()?.url}`,
         false
       );
     return dmlog.send({
