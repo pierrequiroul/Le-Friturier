@@ -11,7 +11,7 @@ const levelRewards = require("../../database/models/levelRewards");
 const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
-
+const { triggerWords } = require('../../database/connect');
 
 
 module.exports = async (client, message) => {
@@ -34,7 +34,7 @@ module.exports = async (client, message) => {
     if (message.attachments.size > 0)
       embedLogs.addField(
         `📃┆Attachments`,
-        `${message.attachments.first()?.url}`,
+        `${message.attachments.first()?.url},
         false
       );
     return dmlog.send({
@@ -44,8 +44,14 @@ module.exports = async (client, message) => {
   }
     // Triggers
  
-
-
+    messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+    for (let i = 0; i < triggerWords.length ; i++) {
+        const args = messageStripped.content.match(new RegExp(triggerWords[i].Regex);
+        if(args) {  
+            message.channel.sendMessage(triggerWords[i].Response);  
+        }  
+    }
+      
 
   // Levels
   Functions.findOne({ Guild: message.guild.id }, async (err, data) => {
