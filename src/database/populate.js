@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const chalk = require('chalk');
 
 async function populate() {
-    const trigWord = mongoose.collection.getCollection("triggers-words");
+    const trigWord = mongoose.getCollection("triggers-words");
     
     
-    console.log(chalk.blue(trigWord[0].Trigger))
+    console.log(chalk.blue(trigWord[0].Trigger));
 }
 
 
