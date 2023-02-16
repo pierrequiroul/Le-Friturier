@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const chalk = require('chalk');
 
-const { triggersWords } = require("../../Collection");
+const { triggersWords } = require("Collection");
 const fs = require('fs');
 
 
