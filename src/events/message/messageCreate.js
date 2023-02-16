@@ -12,6 +12,7 @@ const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
 const { triggersWords } = require("../../Collection");
+const fs = require('fs');
 
 module.exports = async (client, message) => {
   const dmlog = new Discord.WebhookClient({
@@ -42,9 +43,26 @@ module.exports = async (client, message) => {
     });
   }
     // Triggers
-const triggers = triggersWords.map();
-console.log(chalk.blue(chalk.bold(triggers[0].Trigger)));
-
+ 
+// json data
+var jsonData = triggersWords.map();
+ 
+// parse json
+var jsonObj = JSON.parse(jsonData);
+console.log(jsonObj);
+ 
+// stringify JSON Object
+var jsonContent = JSON.stringify(jsonObj);
+console.log(jsonContent);
+ 
+fs.writeFile("output.json", jsonContent, 'utf8', function (err) {
+    if (err) {
+        console.log("An error occured while writing JSON Object to File.");
+        return console.log(err);
+    }
+ 
+    console.log("JSON file has been saved.");
+});
 
 
   // Levels
