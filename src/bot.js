@@ -86,6 +86,10 @@ for (const file of events) {
 // Connect to database
 require("./database/connect")();
 
+// Populate from database
+require("./database/populate")();
+
+
 // Client settings
 client.config = require('./config/bot');
 client.changelogs = require('./config/changelogs');
