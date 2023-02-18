@@ -89,7 +89,7 @@ for (const file of events) {
     const triggerWords = await db.connect();
     console.log("bot.js");
     console.log(triggerWords);
-    module.exports.triggerWords = triggerWords;
+    module.exports = triggerWords;
 })();
 /*
 async function init() {
