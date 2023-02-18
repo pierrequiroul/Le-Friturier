@@ -11,7 +11,7 @@ const levelRewards = require("../../database/models/levelRewards");
 const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
-const triggerWords = require('../../bot.js');
+const list = require('../../bot.js');
 
 
 module.exports = async (client, message) => {
@@ -44,12 +44,12 @@ module.exports = async (client, message) => {
   }
     // Triggers
     console.log("messageCreate.js");
-    console.log(triggerWords);
+    console.log(list.trigger);
     messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
-    for (let i = 0; i < triggerWords.length ; i++) {
-        const args = messageStripped.match(new RegExp(triggerWords[i].Regex));
+    for (let i = 0; i < list.trigger.length ; i++) {
+        const args = messageStripped.match(new RegExp(list.trigger[i].Regex));
         if(args) {  
-            message.channel.send(triggerWords[i].Response);  
+            message.channel.send(list.trigger[i].Response);  
         }  
     }
       
