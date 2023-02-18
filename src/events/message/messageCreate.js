@@ -48,7 +48,7 @@ module.exports = async (client, message) => {
     for (let i = 0; i < list.trigger.length ; i++) {
         const args = messageStripped.match(new RegExp(list.trigger[i].Regex));
         if(args) {  
-            message.channel.reply(list.trigger[i].Response);  
+            message.reply(list.trigger[i].Response);  
         }  
     }
       
