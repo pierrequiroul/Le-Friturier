@@ -85,13 +85,20 @@ for (const file of events) {
 };
 
 // Connect to database
-async function init() {
+(async () => {
     const triggerWords = await db.connect();
     module.exports.triggerWords = triggerWords;
+    console.log(triggerWords);
+})();
+
+/*
+async function init() {
+    const triggerWords = await db.connect();
+    
 }
 
 init();
-
+*/
 //console.log(db.triggerWords);
 // Populate from database
 //require("./database/populate")();
