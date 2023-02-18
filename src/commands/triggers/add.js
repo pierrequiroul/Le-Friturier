@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const Schema = require("../../database/models/triggers");
-const db = require("./database/connect.js");
+const db = require("../../database/connect.js");
 
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
