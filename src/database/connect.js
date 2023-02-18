@@ -53,17 +53,21 @@ const mongoose = require('mongoose');
 const chalk = require('chalk');
 
 async function connect() {
+  try {
     await mongoose.connect(process.env.MONGO_TOKEN, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
-    
-    console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`))
+
+    console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`));
     
     const collection = mongoose.connection.db.collection("triggers-words");
     const triggerWords = await collection.find({}).toArray();
     
     return triggerWords;
+  } catch (error) {
+    console.error(chalk.red(`Erreur de connexion à MongoDB: ${error}`));
+  }
 }
 
 module.exports = { connect };
