@@ -56,7 +56,7 @@ module.exports = async (client, message) => {
                     allowedMentions: {
                         repliedUser: false
                     }
-                } as ReplyMessageOptions);
+                });
             }  
           }
         
