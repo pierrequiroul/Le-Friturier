@@ -21,5 +21,5 @@ async function connect() {
     return data;
 }
 
-module.exports = connect;
+module.exports.connect = connect;
 module.exports.triggerWords = connect();
