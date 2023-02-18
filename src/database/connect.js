@@ -20,7 +20,7 @@ async function connect() {
     
     return data;
 }
-const data = async connect() {
+const data = connect() {
     mongoose.connect(process.env.MONGO_TOKEN, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
