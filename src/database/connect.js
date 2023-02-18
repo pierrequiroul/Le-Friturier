@@ -36,6 +36,7 @@ async function connect() {
                 if (err) {
                     reject(err);
                 } else {
+                    console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`))
                     resolve(data);
                 }
             });

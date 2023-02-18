@@ -87,10 +87,10 @@ for (const file of events) {
 // Connect to database
 (async () => {
     const triggerWords = await db.connect();
-    module.exports.triggerWords = triggerWords;
+
     console.log(triggerWords);
 })();
-
+    module.exports.triggerWords = triggerWords;
 /*
 async function init() {
     const triggerWords = await db.connect();
