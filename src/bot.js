@@ -89,8 +89,10 @@ let triggerWords;
 
 (async () => {
     const triggerWords = await db.connect();
+    console.log(triggerWords);
 })();
-    module.exports.triggerWords = triggerWords;
+
+module.exports = { triggerWords };
 /*
 async function init() {
     const triggerWords = await db.connect();
