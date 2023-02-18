@@ -1,7 +1,6 @@
 const Discord = require('discord.js');
 
 const Schema = require("../../database/models/triggers");
-const { triggersWords } = require("../../Collection");
 
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
@@ -22,8 +21,6 @@ module.exports = async (client, interaction, args) => {
                 Guild: interaction.guild.id,
                 Words: filtered
             });*/
-
-            triggersWords.delete(nom, nom)
 
             client.succNormal({
                 text: `Ce trigger a été ajouté`,

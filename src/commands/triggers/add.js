@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 
 const Schema = require("../../database/models/triggers");
-const { triggersWords } = require("../../Collection");
+const db = require("./database/connect.js");
 
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
@@ -20,7 +20,6 @@ module.exports = async (client, interaction, args) => {
             data.Regex = regex;
             data.Response = response;
             data.save();
-            triggersWords.get(nom).push(nom);
         }
         else {
             new Schema({
@@ -29,9 +28,8 @@ module.exports = async (client, interaction, args) => {
                 Regex: regex,
                 Response: response
             }).save();
-
-            triggersWords.set(nom, nom);
         }
+        const triggerWords = await db.connect();
     })
 
     client.succNormal({
