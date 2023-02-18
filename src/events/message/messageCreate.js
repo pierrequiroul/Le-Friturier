@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
           
     console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
-        if (list.trigger[i].Status) {
+        if (list.trigger[i].Active) {
           
             const regex = list.trigger[i].Regex;
             const source = regex.source; // "ab+c"

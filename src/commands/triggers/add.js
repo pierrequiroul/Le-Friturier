@@ -20,7 +20,7 @@ module.exports = async (client, interaction, args) => {
             data.triggerName = nom;
             data.Regex = regex;
             data.Response = response;
-            data.Status = status;
+            data.Active = status;
             data.save();
         }
         else {
@@ -29,7 +29,7 @@ module.exports = async (client, interaction, args) => {
                 triggerName: nom,
                 Regex: regex,
                 Response: response,
-                Status: status
+                Active: status
             }).save();
         }
         const triggerWords = await db.connect();
