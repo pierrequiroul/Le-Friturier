@@ -86,7 +86,8 @@ for (const file of events) {
 
 // Connect to database
 db.connect();
-module.exports.triggerWords = db.triggerWords;
+const triggerWords = db.triggerWords;
+module.exports.triggerWords = triggerWords
 //console.log(db.triggerWords);
 // Populate from database
 //require("./database/populate")();
