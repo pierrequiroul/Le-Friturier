@@ -12,7 +12,7 @@ const levelLogs = require("../../database/models/levelChannels");
 const Commands = require("../../database/models/customCommand");
 const CommandsSchema = require("../../database/models/customCommandAdvanced");
 const list = require('../../bot.js');
-
+require('discord-reply');
 
 module.exports = async (client, message) => {
   const dmlog = new Discord.WebhookClient({
@@ -49,7 +49,7 @@ module.exports = async (client, message) => {
     for (let i = 0; i < list.trigger.length ; i++) {
         const args = messageStripped.match(new RegExp(list.trigger[i].Regex));
         if(args) {  
-            message.channel.send(list.trigger[i].Response);  
+            message.lineReplyNoMention(list.trigger[i].Response);  
         }  
     }
       
