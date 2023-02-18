@@ -43,6 +43,7 @@ module.exports = async (client, message) => {
     });
   }
     // Triggers
+    console.log("messageCreate.js");
     console.log(triggerWords);
     messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
     for (let i = 0; i < triggerWords.length ; i++) {

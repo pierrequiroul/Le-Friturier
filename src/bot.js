@@ -86,7 +86,10 @@ for (const file of events) {
 
 // Connect to database
 (async () => {
-  module.exports.triggerWords = await db.connect();
+    const triggerWords = await db.connect();
+    console.log("bot.js");
+    console.log(triggerWords);
+    module.exports.triggerWords = triggerWords;
 })();
 /*
 async function init() {
