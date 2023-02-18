@@ -5,6 +5,7 @@ const Spotify = require("erela.js-spotify");
 const Facebook = require("erela.js-facebook");
 const Deezer = require("erela.js-deezer");
 const AppleMusic = require("erela.js-apple");
+const db = require("./database/connect.js");
 
 const client = new Discord.Client({
     allowedMentions: {
@@ -84,8 +85,8 @@ for (const file of events) {
 };
 
 // Connect to database
-const triggerWords = require("./database/connect")();
-module.exports = triggerWords;
+db.connect();
+module.exports.triggerWords = db.triggerWords;
 // Populate from database
 //require("./database/populate")();
 
