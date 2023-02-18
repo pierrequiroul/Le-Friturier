@@ -50,7 +50,7 @@ module.exports = async (client, message) => {
         if (list.trigger[i].Active) {
 
             const args = messageStripped.match(list.trigger[i].Regex);
-            if(args.length != 0) {  
+            if(args != null) {  
                 message.reply(list.trigger[i].Response);  
             }  
           }
