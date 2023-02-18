@@ -13,7 +13,7 @@ async function connect() {
         
           const collection  = mongoose.connection.db.collection("triggers-words");
           collection.find({}).toArray(function(err, data){
-              console.log(data); // it will print your collection data
+              //console.log(data); // it will print your collection data
           });
         
     });
