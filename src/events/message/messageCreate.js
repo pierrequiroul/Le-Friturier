@@ -44,7 +44,8 @@ module.exports = async (client, message) => {
     // Triggers
     console.log("messageCreate.js");
     console.log(list.trigger);
-    messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"")
+    messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
         const args = messageStripped.match(list.trigger[i].Regex);
         if(args) {  
