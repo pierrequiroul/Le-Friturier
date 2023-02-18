@@ -7,6 +7,7 @@ module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
     const regex = interaction.options.getString('regex');
     const response = interaction.options.getString('response');
+    const status = interaction.options.getString('status');
     
     Schema.findOne({ Guild: interaction.guild.id, triggerName: nom }, async (err, data) => {
         if (data) {
@@ -19,6 +20,7 @@ module.exports = async (client, interaction, args) => {
             data.triggerName = nom;
             data.Regex = regex;
             data.Response = response;
+            data.Status = status;
             data.save();
         }
         else {
@@ -26,7 +28,8 @@ module.exports = async (client, interaction, args) => {
                 Guild: interaction.guild.id,
                 triggerName: nom,
                 Regex: regex,
-                Response: response
+                Response: response,
+                Status: status
             }).save();
         }
         const triggerWords = await db.connect();

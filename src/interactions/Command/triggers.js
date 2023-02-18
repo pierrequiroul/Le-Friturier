@@ -11,9 +11,10 @@ module.exports = {
             subcommand
                 .setName('add')
                 .setDescription('Ajouter un trigger')
-                .addStringOption(option => option.setName('nom').setDescription('Nom du déclencheur').setRequired(true))
-                .addStringOption(option => option.setName('regex').setDescription('Filtre Regex').setRequired(true))
+                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
+                .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
                 .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(true))
+                .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger').setRequired(false))
         )
         .addSubcommand(subcommand =>
             subcommand

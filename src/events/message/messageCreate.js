@@ -43,17 +43,24 @@ module.exports = async (client, message) => {
   }
     // Triggers
     console.log("messageCreate.js");
-    console.log(list.trigger);
     messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+          
     console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
-          console.log(list.trigger[i].Regex);
-        const args = messageStripped.match(new RegExp(list.trigger[i].Regex));
-          console.log("args " + args);
-        if(args.length != 0) {  
-          console.log(list.trigger[i].Response);
-            message.reply(list.trigger[i].Response);  
-        }  
+        if (list.trigger[i].Status) {
+          
+            const regex = list.trigger[i].Regex;
+            const source = regex.source; // "ab+c"
+            const flags = source.match(/\/([a-z]*)$/i)[1]; // "i"
+            const parts = source.split('/').slice(1, -1); // ["ab+c"]
+          
+            const args = messageStripped.match(new RegExp(parts, flags));
+            console.log("args " + args);
+            if(args.length != 0) {  
+                message.reply(list.trigger[i].Response);  
+            }  
+          }
+        
     }
       
 
