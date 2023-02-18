@@ -51,7 +51,12 @@ module.exports = async (client, message) => {
 
             const args = messageStripped.match(list.trigger[i].Regex);
             if(args != null) {  
-                message.reply(list.trigger[i].Response);  
+                message.reply({
+                    content: list.trigger[i].Response,
+                    allowedMentions: {
+                        repliedUser: false
+                    }
+                } as ReplyMessageOptions);
             }  
           }
         
