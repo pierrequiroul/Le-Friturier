@@ -85,6 +85,8 @@ for (const file of events) {
 };
 
 // Connect to database
+let triggerWords;
+
 (async () => {
     const triggerWords = await db.connect();
 
