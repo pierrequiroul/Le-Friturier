@@ -48,13 +48,8 @@ module.exports = async (client, message) => {
     console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
         if (list.trigger[i].Active) {
-          
-            const regex = list.trigger[i].Regex;
-            const source = regex.source; // "ab+c"
-            const flags = source.match(/\/([a-z]*)$/i)[1]; // "i"
-            const parts = source.split('/').slice(1, -1); // ["ab+c"]
-          
-            const args = messageStripped.match(new RegExp(parts, flags));
+
+            const args = messageStripped.match(new RegExp(list.trigger[i].Regex.source, list.trigger[i].Regex.flags));
             console.log("args " + args);
             if(args.length != 0) {  
                 message.reply(list.trigger[i].Response);  
