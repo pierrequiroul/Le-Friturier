@@ -92,7 +92,7 @@ let triggerWords;
     //console.log(triggerWords);
 })();
 
-module.exports = { client, triggerWords };
+module.exports = { client, triggerWords, };
 /*
 async function init() {
     const triggerWords = await db.connect();
