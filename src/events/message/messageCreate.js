@@ -48,9 +48,9 @@ module.exports = async (client, message) => {
     console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
           console.log(list.trigger[i].Regex);
-        const args = messageStripped.test(new RegExp(list.trigger[i].Regex));
+        const args = messageStripped.match(new RegExp(list.trigger[i].Regex));
           console.log("args " + args);
-        if(args) {  
+        if(args.length != 0) {  
           console.log(list.trigger[i].Response);
             message.reply(list.trigger[i].Response);  
         }  
