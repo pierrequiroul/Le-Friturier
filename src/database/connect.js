@@ -7,12 +7,15 @@ async function connect() {
         useUnifiedTopology: true,
     });
     
-    mongoose.connection.once("open", () => {
-        console.log(chalk.blue(chalk.bold(`Systeme`)), (chalk.white(`>>`)), chalk.red(`MongoDB`), chalk.green(`est prêt !`))
-        
-        const collection  = mongoose.connection.db.collection("triggers-words");
-        const data = await collection.find({}).toArray();
-        
+    return new Promise((resolve, reject) => {
+        const collection = mongoose.connection.db.collection("triggers-words");
+        collection.find({}).toArray(function(err, data) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
     });
     
     return data;
