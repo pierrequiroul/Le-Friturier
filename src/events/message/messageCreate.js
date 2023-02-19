@@ -42,21 +42,37 @@ module.exports = async (client, message) => {
     });
   }
     // Triggers
-    console.log("messageCreate.js");
     messageStripped = message.content.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
-          
-    console.log(messageStripped);
     for (let i = 0; i < list.trigger.length ; i++) {
+        // Status active ?
         if (list.trigger[i].Active) {
-
-            const args = messageStripped.match(list.trigger[i].Regex);
-            if(args != null) {  
-                message.reply({
-                    content: list.trigger[i].Response,
-                    allowedMentions: {
-                        repliedUser: false
-                    }
-                });
+          
+            // Regex flags ?
+            if (list.trigger[i].RegexFlags != null) {
+            const Regext = new Regex(list.trigger[i].Regex,list.trigger[i].RegexFlags);
+            } else {
+            const Regext = list.trigger[i].Regex;
+            }
+          
+            // Check filter regex
+            const args = messageStripped.match(Regext);
+            if(args != null) {
+          
+                // Reply active ?
+                if (list.trigger[i].Reply) {
+                    message.reply({
+                        content: list.trigger[i].Response,
+                        allowedMentions: {
+                            repliedUser: list.trigger[i].Mention
+                        }
+                    });
+                }
+    
+                // Deleting active ?
+                if (list.trigger[i].Deleting) {
+                    message.delete({ timeout: 1000 });
+                }
+                
             }  
           }
         

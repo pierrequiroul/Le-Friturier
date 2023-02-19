@@ -6,8 +6,12 @@ const db = require("../../database/connect.js");
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
     const regex = interaction.options.getString('regex');
+    const regexFlags = interaction.options.getString('regex-flags');
     const response = interaction.options.getString('response');
     const status = interaction.options.getString('status');
+    const deleting = interaction.options.getString('deleting');
+    const mention = interaction.options.getString('mention');
+    const reply = interaction.options.getString('reply');
     
     Schema.findOne({ Guild: interaction.guild.id, triggerName: nom }, async (err, data) => {
         if (data) {
@@ -19,8 +23,12 @@ module.exports = async (client, interaction, args) => {
             }
             data.triggerName = nom;
             data.Regex = regex;
+            data.RegexFlags = regexFlags;
             data.Response = response;
             data.Active = status;
+            data.Deleting = deleting;
+            data.Reply = reply;
+            data.Mention = mention;
             data.save();
         }
         else {
@@ -28,8 +36,12 @@ module.exports = async (client, interaction, args) => {
                 Guild: interaction.guild.id,
                 triggerName: nom,
                 Regex: regex,
+                RegexFlags: regexFlags,
                 Response: response,
-                Active: status
+                Active: status,
+                Deleting: deleting,
+                Reply: reply,
+                Mention: mention
             }).save();
         }
         const triggerWords = await db.connect();

@@ -4,8 +4,12 @@ const Schema = new mongoose.Schema({
     Guild: String,
     triggerName: String,
     Regex: String,
+    RegexFlags: { type: String, default: null},
     Response: String,
-    Active: { type: Boolean, default: true }
+    Active: { type: Boolean, default: true },
+    Deleting: { type: Boolean, default: false },
+    Reply: { type: Boolean, default: true },
+    Mention: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("triggers-words", Schema);

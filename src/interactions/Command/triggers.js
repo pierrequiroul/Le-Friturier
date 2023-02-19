@@ -13,8 +13,12 @@ module.exports = {
                 .setDescription('Ajouter un trigger')
                 .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
                 .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
+                .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
+                .addStringOption(option => option.setName('reply').setDescription('Répond au message').setRequired(false))
+                .addStringOption(option => option.setName('mention').setDescription('Mentionne le message').setRequired(false))
                 .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(true))
                 .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger').setRequired(false))
+                .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original').setRequired(false))
         )
         .addSubcommand(subcommand =>
             subcommand
