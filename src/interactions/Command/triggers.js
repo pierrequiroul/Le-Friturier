@@ -1,7 +1,5 @@
-const { CommandInteraction, Client } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { ChannelType } = require('discord-api-types/v9');
-const Discord = require('discord.js');
+const { Client, CommandInteraction, Permissions } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,53 +13,47 @@ module.exports = {
                 .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
                 .addStringOption(option => option.setName('reponse').setDescription('Reponse du bot').setRequired(true))
                 .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
-                .addStringOption(option => option.setName('reply').setDescription('Répond au message (par defaut actif)').setRequired(false)
-                       .addChoices(
-                            { name: 'Actif', value: 'true' },
-                            { name: 'Inactif', value: 'false' },
-                        ))
-                .addStringOption(option => option.setName('mention').setDescription('Mentionne le message (par defaut inactif)').setRequired(false)
-                       .addChoices(
-                            { name: 'Actif', value: 'true' },
-                            { name: 'Inactif', value: 'false' },
-                        ))
-
-                .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger (par defaut actif)').setRequired(false)
-                       .addChoices(
-                            { name: 'Actif', value: 'true' },
-                            { name: 'Inactif', value: 'false' },
-                        ))
-                .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original (par defaut inactif)').setRequired(false)
-                       .addChoices(
-                            { name: 'Actif', value: 'true' },
-                            { name: 'Inactif', value: 'false' },
-                        ))
+                .addStringOption(option => option.setName('reply').setDescription('Répond au message (par defaut actif)')
+                    .addChoices(
+                        { name: 'Actif', value: 'true' },
+                        { name: 'Inactif', value: 'false' },
+                    ).setRequired(false))
+                .addStringOption(option => option.setName('mention').setDescription('Mentionne le message (par defaut inactif)')
+                    .addChoices(
+                        { name: 'Actif', value: 'true' },
+                        { name: 'Inactif', value: 'false' },
+                    ).setRequired(false))
+                .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger (par defaut actif)')
+                    .addChoices(
+                        { name: 'Actif', value: 'true' },
+                        { name: 'Inactif', value: 'false' },
+                    ).setRequired(false))
+                .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original (par defaut inactif)')
+                    .addChoices(
+                        { name: 'Actif', value: 'true' },
+                        { name: 'Inactif', value: 'false' },
+                    ).setRequired(false))
         )
         .addSubcommand(subcommand =>
             subcommand
                 .setName('remove')
                 .setDescription('Supprimer un trigger')
                 .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
-        )
-    
-    ,
+        ),
 
     /** 
      * @param {Client} client
      * @param {CommandInteraction} interaction
-     * @param {String[]} args
      */
 
-    run: async (client, interaction, args) => {
+    run: async (client, interaction) => {
         const perms = await client.checkUserPerms({
-            flags: [Discord.Permissions.FLAGS.MANAGE_MESSAGES],
+            flags: [Permissions.FLAGS.MANAGE_MESSAGES],
             perms: ["MANAGE_MESSAGES"]
         }, interaction)
 
-        if (perms == false) return;
+        if (!perms) return;
 
-        client.loadSubcommands(client, interaction, args);
+        client.loadSubcommands(client, interaction);
     },
 };
-
- 
