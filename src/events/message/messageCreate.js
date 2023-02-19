@@ -48,11 +48,10 @@ module.exports = async (client, message) => {
         if (list.trigger[i].Active) {
           
             // Regex flags ?
-            if (list.trigger[i].RegexFlags != null) {
-            const Regext = new Regex(list.trigger[i].Regex,list.trigger[i].RegexFlags);
-            } else {
             const Regext = list.trigger[i].Regex;
-            }
+            if (list.trigger[i].RegexFlags != "") {
+            const Regext = new Regex(list.trigger[i].Regex,list.trigger[i].RegexFlags);
+            };
           
             // Check filter regex
             const args = messageStripped.match(Regext);

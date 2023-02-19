@@ -6,12 +6,20 @@ const db = require("../../database/connect.js");
 module.exports = async (client, interaction, args) => {
     const nom = interaction.options.getString('nom');
     const regex = interaction.options.getString('regex');
+    
     const regexFlags = interaction.options.getString('regex-flags');
+    if (regexFlags == null) regexFlags = "";
     const response = interaction.options.getString('response');
+    if (response == null) response = "";
     const status = interaction.options.getString('status');
+    if (status == null) status = true;
     const deleting = interaction.options.getString('deleting');
+    if (deleting == null) deleting = false; 
     const mention = interaction.options.getString('mention');
+    if (mention == null) mention = false;
     const reply = interaction.options.getString('reply');
+    if (reply == null) reply = true;
+    
     
     Schema.findOne({ Guild: interaction.guild.id, triggerName: nom }, async (err, data) => {
         if (data) {
