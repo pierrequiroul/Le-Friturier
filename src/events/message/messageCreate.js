@@ -48,9 +48,11 @@ module.exports = async (client, message) => {
         if (list.trigger[i].Active) {
           
             // Regex flags ?
-            var Regext = list.trigger[i].Regex;
+            
             if (list.trigger[i].RegexFlags != "") {
             var Regext = new RegExp(list.trigger[i].Regex,list.trigger[i].RegexFlags);
+            } else {
+            var Regext = list.trigger[i].Regex;
             };
           
             // Check filter regex
