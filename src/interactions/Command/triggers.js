@@ -11,14 +11,31 @@ module.exports = {
             subcommand
                 .setName('add')
                 .setDescription('Ajouter un trigger')
-                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
+                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true)
                 .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
+                .addStringOption(option => option.setName('reponse').setDescription('Reponse du bot').setRequired(true))
                 .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
-                .addStringOption(option => option.setName('reply').setDescription('Répond au message').setRequired(false))
-                .addStringOption(option => option.setName('mention').setDescription('Mentionne le message').setRequired(false))
-                .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(false))
-                .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger').setRequired(false))
-                .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original').setRequired(false))
+                .addStringOption(option => option.setName('reply').setDescription('Répond au message (par defaut actif)').setRequired(false)
+                       .addChoices(
+                            { name: 'Actif', value: 'true' },
+                            { name: 'Inactif', value: 'false' },
+                        ))
+                .addStringOption(option => option.setName('mention').setDescription('Mentionne le message (par defaut inactif)').setRequired(false)
+                       .addChoices(
+                            { name: 'Actif', value: 'true' },
+                            { name: 'Inactif', value: 'false' },
+                        ))
+
+                .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger (par defaut actif)').setRequired(false)
+                       .addChoices(
+                            { name: 'Actif', value: 'true' },
+                            { name: 'Inactif', value: 'false' },
+                        ))
+                .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original (par defaut inactif)').setRequired(false)
+                       .addChoices(
+                            { name: 'Actif', value: 'true' },
+                            { name: 'Inactif', value: 'false' },
+                        ))
         )
         .addSubcommand(subcommand =>
             subcommand
