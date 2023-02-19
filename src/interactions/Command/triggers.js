@@ -16,7 +16,7 @@ module.exports = {
                 .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
                 .addStringOption(option => option.setName('reply').setDescription('Répond au message').setRequired(false))
                 .addStringOption(option => option.setName('mention').setDescription('Mentionne le message').setRequired(false))
-                .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(true))
+                .addStringOption(option => option.setName('response').setDescription('Réponse que le bot va renvoyer').setRequired(false))
                 .addStringOption(option => option.setName('status').setDescription('Activer ou désactiver ce trigger').setRequired(false))
                 .addStringOption(option => option.setName('deleting').setDescription('Supprimer le message original').setRequired(false))
         )
