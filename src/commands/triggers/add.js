@@ -4,20 +4,20 @@ const Schema = require("../../database/models/triggers");
 const db = require("../../database/connect.js");
 
 module.exports = async (client, interaction, args) => {
-    const nom = interaction.options.getString('nom');
-    const regex = interaction.options.getString('regex');
+    var nom = interaction.options.getString('nom');
+    var regex = interaction.options.getString('regex');
     
-    const regexFlags = interaction.options.getString('regex-flags');
+    var regexFlags = interaction.options.getString('regex-flags');
     if (regexFlags == null) regexFlags = "";
-    const response = interaction.options.getString('response');
+    var response = interaction.options.getString('response');
     if (response == null) response = "";
-    const status = interaction.options.getString('status');
+    var status = interaction.options.getString('status');
     if (status == null) status = true;
-    const deleting = interaction.options.getString('deleting');
+    var deleting = interaction.options.getString('deleting');
     if (deleting == null) deleting = false; 
-    const mention = interaction.options.getString('mention');
+    var mention = interaction.options.getString('mention');
     if (mention == null) mention = false;
-    const reply = interaction.options.getString('reply');
+    var reply = interaction.options.getString('reply');
     if (reply == null) reply = true;
     
     
@@ -52,7 +52,7 @@ module.exports = async (client, interaction, args) => {
                 Mention: mention
             }).save();
         }
-        const triggerWords = await db.connect();
+        var triggerWords = await db.connect();
     })
 
     client.succNormal({
