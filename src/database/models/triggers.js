@@ -5,7 +5,7 @@ const Schema = new mongoose.Schema({
     triggerName: String,
     Regex: String,
     RegexFlags: { type: String, default: null},
-    Response: String,
+    Response: { type : String, default: null},
     Active: { type: Boolean, default: true },
     Deleting: { type: Boolean, default: false },
     Reply: { type: Boolean, default: true },
