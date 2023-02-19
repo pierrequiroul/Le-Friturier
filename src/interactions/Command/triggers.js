@@ -11,7 +11,7 @@ module.exports = {
             subcommand
                 .setName('add')
                 .setDescription('Ajouter un trigger')
-                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true)
+                .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
                 .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
                 .addStringOption(option => option.setName('reponse').setDescription('Reponse du bot').setRequired(true))
                 .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
