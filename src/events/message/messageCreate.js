@@ -59,6 +59,8 @@ module.exports = async (client, message) => {
             const args = messageStripped.match(Regext);
             if(args != null) {
                 console.log(Regext);
+                console.log(list.trigger[i].Response);
+          console.log(list.trigger[i].Mention);
                 // Reply active ?
                 message.reply({
                     content: list.trigger[i].Response,
