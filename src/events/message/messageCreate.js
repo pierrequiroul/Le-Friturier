@@ -48,7 +48,7 @@ module.exports = async (client, message) => {
         if (list.trigger[i].Active) {
           
             // Regex flags ?
-            
+            console.log(messageStripped);
             if (list.trigger[i].RegexFlags != "") {
             var Regext = new RegExp(list.trigger[i].Regex,list.trigger[i].RegexFlags);
             } else {
@@ -60,14 +60,12 @@ module.exports = async (client, message) => {
             if(args != null) {
                 console.log(Regext);
                 // Reply active ?
-                if (list.trigger[i].Reply) {
-                    message.reply({
-                        content: list.trigger[i].Response,
-                        allowedMentions: {
-                            repliedUser: list.trigger[i].Mention
-                        }
-                    });
-                }
+                message.reply({
+                    content: list.trigger[i].Response,
+                    allowedMentions: {
+                        repliedUser: list.trigger[i].Mention
+                    }
+                });
     
                 // Deleting active ?
                 if (list.trigger[i].Deleting) {
