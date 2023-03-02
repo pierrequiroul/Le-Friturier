@@ -18,8 +18,8 @@ module.exports = async (client, interaction, args) => {
         12: "Décembre"
     };
 
-    const day = interaction.options.getNumber('day');
-    const month = interaction.options.getNumber('month');
+    const day = interaction.options.getNumber('jour');
+    const month = interaction.options.getNumber('mois');
 
     if (!day || day > 31) return client.errNormal({ 
         error: "Mauvais format de jour !",
