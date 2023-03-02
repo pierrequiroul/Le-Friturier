@@ -33,9 +33,9 @@ module.exports = async (client, interaction, args) => {
 
     const convertedDay = day;
     const convertedMonth = months[month];
-    console.log(day);
-    console.log(month);
-    if (convertedDay == 1) {
+    console.log(convertedDay);
+    console.log(convertedMonth);
+    if (day == 1) {
         const birthdayString = "1er " + convertedMonth;
     } else {
         const birthdayString = convertedDay + " " + convertedMonth;
