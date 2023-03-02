@@ -33,7 +33,7 @@ module.exports = async (client, interaction, args) => {
 
     console.log(day);
     console.log(months[month]);
-    const birthdayString = "";
+    var birthdayString = "";
     if (day == 1) {
         birthdayString = "1er " + months[month];
     } else {
