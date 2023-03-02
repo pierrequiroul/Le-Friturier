@@ -12,7 +12,7 @@ module.exports = async (client, interaction, args) => {
 
     const lb = rawBirthdayboard.map(e => `・ **<@!${e.User}>** - ${e.Birthday} `);
 
-    await client.createLeaderboard(`<:uo_party:1015552073405841458>・Anniversaires - ${interaction.guild.name}`, lb, interaction);
+    await client.createLeaderboard(`:birthday: Anniversaires`, lb, interaction);
 }
 
  
