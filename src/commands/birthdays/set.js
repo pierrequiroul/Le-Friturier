@@ -31,14 +31,13 @@ module.exports = async (client, interaction, args) => {
         type: 'editreply'
     }, interaction);
 
-    const convertedDay = day;
-    const convertedMonth = months[month];
-    console.log(convertedDay);
-    console.log(convertedMonth);
+    console.log(day);
+    console.log(months[month]);
+    const birthdayString = "";
     if (day == 1) {
-        const birthdayString = "1er " + convertedMonth;
+        birthdayString = "1er " + months[month];
     } else {
-        const birthdayString = convertedDay + " " + convertedMonth;
+        birthdayString = day + " " + months[month];
     }
     console.log(birthdayString);
     Schema.findOne({ Guild: interaction.guild.id, User: interaction.user.id }, async (err, data) => {
