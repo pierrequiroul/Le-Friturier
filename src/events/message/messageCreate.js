@@ -54,12 +54,12 @@ module.exports = async (client, message) => {
             } else {
             var Regext = list.trigger[i].Regex;
             };
-            console.log(Regext);
+
             // Check filter regex
             const args = messageStripped.match(Regext);
             if(args != null) {
-                console.log(Regext);
-                console.log(list.trigger[i].Response);
+                console.log(">> " + Regext);
+                console.log(">> " + list.trigger[i].Response);
           console.log(list.trigger[i].Mention);
                 // Reply active ?
                 message.reply({
