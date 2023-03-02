@@ -58,7 +58,7 @@ module.exports = async (client, interaction, args) => {
         text: `Ton anniversaire a bien été configuré avec succès !`,
         fields: [
             {
-                name: `${client.emotes.normal.birthday} ┆ Anniversaire`,
+                name: "Tu es né le",
                 value: birthdayString
             }
         ],
