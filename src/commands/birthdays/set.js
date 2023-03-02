@@ -34,9 +34,9 @@ module.exports = async (client, interaction, args) => {
     const convertedDay = suffixes(day);
     const convertedMonth = months[month];
     if (convertedDay == 1) {
-        const birthdayString = `1er ${convertedMonth}`;
+        const birthdayString = "1er " + convertedMonth;
     } else {
-        const birthdayString = `${convertedDay} ${convertedMonth}`;
+        const birthdayString = convertedDay + " " + convertedMonth;
     }
     
     Schema.findOne({ Guild: interaction.guild.id, User: interaction.user.id }, async (err, data) => {
@@ -58,7 +58,7 @@ module.exports = async (client, interaction, args) => {
         fields: [
             {
                 name: `${client.emotes.normal.birthday} ┆ Anniversaire`,
-                value: `${birthdayString}`
+                value: birthdayString
             }
         ],
         type: 'editreply'
