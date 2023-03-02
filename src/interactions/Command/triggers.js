@@ -13,7 +13,7 @@ module.exports = {
                 .setDescription('Ajouter un trigger')
                 .addStringOption(option => option.setName('nom').setDescription('Nom du trigger').setRequired(true))
                 .addStringOption(option => option.setName('regex').setDescription('Filtre regex').setRequired(true))
-                .addStringOption(option => option.setName('reponse').setDescription('Reponse du bot').setRequired(true))
+                .addStringOption(option => option.setName('response').setDescription('Reponse du bot').setRequired(true))
                 .addStringOption(option => option.setName('regex-flags').setDescription('Flags regex').setRequired(false))
                 .addStringOption(option => option.setName('reply').setDescription('Répond au message par defaut actif').setRequired(false))
                 .addStringOption(option => option.setName('mention').setDescription('Mentionne le message par defaut inactif').setRequired(false))

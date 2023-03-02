@@ -60,7 +60,7 @@ module.exports = async (client, message) => {
             if(args != null) {
                 console.log(">> " + Regext);
                 console.log(">> " + list.trigger[i].Response);
-          console.log(list.trigger[i].Mention);
+                console.log(list.trigger[i].Mention);
                 // Reply active ?
                 message.reply({
                     content: list.trigger[i].Response,
