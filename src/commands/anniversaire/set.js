@@ -17,10 +17,13 @@ module.exports = async (client, interaction, args) => {
         11: "Novembre",
         12: "Décembre"
     };
-
+    
     const day = interaction.options.getNumber('jour');
     const month = interaction.options.getNumber('mois');
-
+    var year = interaction.options.getNumber('year');
+    if (year == null) {
+        year = 0000;
+    }
     if (!day || day > 31) return client.errNormal({ 
         error: "Mauvais format de jour !",
         type: 'editreply'
@@ -30,7 +33,12 @@ module.exports = async (client, interaction, args) => {
         error: "Mauvais format de mois !",
         type: 'editreply'
     }, interaction);
-
+    
+    if (!month || month < 12) return client.errNormal({
+        error: "Mauvais format de mois !",
+        type: 'editreply'
+    }, interaction);
+    
     console.log(day);
     console.log(months[month]);
     var birthdayString = "";
@@ -49,7 +57,10 @@ module.exports = async (client, interaction, args) => {
             new Schema({
                 Guild: interaction.guild.id,
                 User: interaction.user.id,
-                Birthday: birthdayString
+                Birthday: birthdayString,
+                Day: day,
+                Month: month,
+                Year: year,
             }).save();
         }
     })
