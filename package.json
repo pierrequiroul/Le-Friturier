@@ -26,6 +26,8 @@
   "author": "CorwinDev",
   "license": "ISC",
   "dependencies": {
+    "convert-time": "^0.3.0",
+    "googleapis": "^27.0.0",
     "@discordjs/builders": "^0.11.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.7.5",
@@ -77,5 +79,8 @@
     "util": "^0.12.4",
     "weather-js": "^2.0.0",
     "ytdl-core": "^4.9.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
   }
 }
