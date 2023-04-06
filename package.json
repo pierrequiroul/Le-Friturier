@@ -67,11 +67,15 @@
     "node-fetch": "^2.6.6",
     "parse-ms": "^2.1.0",
     "popcat-wrapper": "^1.5.4",
+    "puppeteer-core": "^19.8.5",
     "request": "^2.88.2",
     "sourcebin": "^5.0.0",
+    "tiktok-scraper-without-watermark": "^1.1.3",
     "topgg-autoposter": "^2.0.1",
+    "url-regex-safe": "^3.0.0",
     "util": "^0.12.5",
     "weather-js": "^2.0.0",
+    "yt-dlp-wrap": "^2.3.11",
     "ytdl-core": "^4.11.2"
   }
 }
