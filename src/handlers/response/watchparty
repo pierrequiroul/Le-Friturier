@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const Triggers = require('../../database/models/triggers');
-const puppeteer = require("puppeteer");
 
 module.exports = async (client) => {
     const regex = {
@@ -31,7 +30,16 @@ module.exports = async (client) => {
               url = primeparty[0];
               watchparty = true;
               icon = "https://store-images.s-microsoft.com/image/apps.42667.14618985536919905.4b30e4f3-f7a1-4421-840c-2cc97b10e8e0.e2d07496-243f-458a-b5ef-e3249f7bb71f";
-            };
+              const match = url.match(/\bhttps?:\/\/(?:www\.)?primevideo\.com(?:\/gp\/video)?\/watchparty\/amzn1\.dv\.wp\.room\.([\w-]+)\b/i);
+              const uniqueId = 'amzn1.dv.wp.room.' + match[1];
+              const jsonUrl = `https://atv-ps-eu.primevideo.com/watchparty/decorate/BatchGetWatchPartyDecoration?deviceTypeId=AOAGZA014O5RE&caller=pv-web&firmware=DVWebNode&wpIds=${uniqueId}&uxLocale=fr_FR&marketplaceId=A3K6Y4MI8GDYMT&deviceId=3513d8d1230387108221e950e36c7aa050428d7de4116893ca355a47&gascEnabled=true`;
+
+              fetch(jsonUrl)
+                .then(response => response.json())
+                .then(jsonData => console.log(jsonData));
+              };
+              //var jsonData = {"errors":[],"wpDecorations":{"amzn1.dv.wp.room.f4dc6b4e-3b99-49dc-964e-15f225e83228":{"amazonRating":null,"amazonRatingCount":null,"boxArt":"https://images-eu.ssl-images-amazon.com/images/S/pv-target-images/cafc74ac111316ed24d784e763bdf01d1521c0528b424661e9693360bf2d6771._UR800,450_RI_.jpg","catalogOffers":["SUBSCRIPTION"],"chatId":"2-5c8bf0ff-88c8-e72f-61db-1ec887d7dca2","contentDescriptors":["contient des scènes violentes","contient du langage grossier"],"contentType":"EPISODE","detailLink":"https://www.primevideo.com/gp/video/detail/amzn1.dv.gti.180a2e3c-ec8c-46bd-a2ce-d97e36aeaf91/ref=dvm_tch_wtp_us_cd_s_watchonamazon","directors":null,"duration":"PT44M40S","episodeNumber":2,"genres":["Drama"],"isFirstRentalPlayback":false,"maturity":{"logo":{"height":0,"logoURL":null,"width":0},"preferredRating":{"system":"amazon_maturity_rating","value":"13+"},"ratingType":"AmazonMaturityRating","text":{"stringId":null,"type":null},"value":"13+"},"nextUpTitleId":"amzn1.dv.gti.e0be44b0-52d0-4e71-8dde-2dd248db6262","parentalControlRestricted":false,"playbackInfo":{"playbackToken":"eyJhbGciOiJIUzUxMiJ9.CjRhbXpuMS5kdi5wcC50aWQuNjBiNWE5MDQtNzU5MC1hNjBkLTBhZTAtMzI3OWQ3NTE1MjdiEg13YXRjaFBhcnR5L3YxGhsyMDIzLTA0LTEwVDE4OjU5OjU5LjE2MTQ0M1oiGzIwMjMtMDQtMTBUMTg6NTk6NTkuMTYxNDQzWiobMjAyMy0wNC0xMVQwMjo1OTo1OS4xNjE0NDNaOkAKDHdhdGNoUGFydHlJZBIwYW16bjEuZHYud3AuNTRkZDU0YTUtNzRlOC00NzMzLTg3N2QtNTUwOWFjOTE0YjQ3SkkKFXN5bmNocm9uaXplZFZpZXdpbmdJZBIwYW16bjEuZHYud3AuNTRkZDU0YTUtNzRlOC00NzMzLTg3N2QtNTUwOWFjOTE0YjQ3.I5ku4K2TtXf42Azfg5aqbUKGIG6408RidD1cttd33115uudjXpKeSI_Ou4u2fo6QFQ2MpGB3_ZLsXnfIGTd2kA","sdkInitParams":"eyJjbGllbnROb3RpZmljYXRpb24iOnsidG9waWMiOiJhdndwL2V2dC9hbXpuMV9kdl93cF9yb29tX2Y0ZGM2YjRlLTNiOTktNDlkYy05NjRlLTE1ZjIyNWU4MzIyOCJ9LCJ3cElkIjoiYW16bjEuZHYud3Aucm9vbS5mNGRjNmI0ZS0zYjk5LTQ5ZGMtOTY0ZS0xNWYyMjVlODMyMjgiLCJ3cFN5bmNJZCI6ImFtem4xLmR2LndwLjU0ZGQ1NGE1LTc0ZTgtNDczMy04NzdkLTU1MDlhYzkxNGI0NyIsIndwU2Vzc2lvbklkIjoiODg5MjNiMDMtMjBjNC00YTYzLWEwM2ItOGJhYjU1ZTRlN2Y2IiwidGl0bGVJZCI6ImFtem4xLmR2Lmd0aS4xODBhMmUzYy1lYzhjLTQ2YmQtYTJjZS1kOTdlMzZhZWFmOTEiLCJ2aWRlb01hdGVyaWFsVHlwZSI6IkZlYXR1cmUiLCJjaGF0SWQiOiIyLTVjOGJmMGZmLTg4YzgtZTcyZi02MWRiLTFlYzg4N2Q3ZGNhMiIsIndwUm9vbVNlcXVlbmNlTnVtYmVyIjowLCJhbGxvd0lkbGVXYXRjaFBhcnR5Ijp0cnVlLCJ3cEhvc3QiOnRydWUsInNoYXJlYWJsZVVSTCI6Imh0dHBzOi8vd2F0Y2hwYXJ0eS5hbWF6b24vZTk2a3BzZiIsImNhbGxlcklkIjoicHYtd2ViIiwibWFya2V0cGxhY2VJZCI6IkEzSzZZNE1JOEdEWU1UIiwiY3VzdG9tZXJJZCI6bnVsbCwicGxheWJhY2tDb250cm9sTW9kZSI6IkFsbG93RXZlcnlvbmUifQ=="},"releaseYear":2006,"seasonNumber":2,"seriesName":"Doctor Who","shareableURL":"https://watchparty.amazon/e96kpsf","shortCode":"51169755","starring":["David Tennant","Billie Piper","Pauline Collins"],"streamEligibility":{"action":"ALLOW","denyReason":null},"synopsis":"Le Tardis arrive au 19ème siècle en Ecosse. Le Docteur et Rose y rencontrent la Reine Victoria en visite officielle. Mais des Loups Garous s'invitent à la fête et le Docteur pourrait ne pas être en mesure de sauver tout le monde...","title":"Un loup garou royal","titleId":"amzn1.dv.gti.180a2e3c-ec8c-46bd-a2ce-d97e36aeaf91","watchPartyHost":true,"wpId":"amzn1.dv.wp.room.f4dc6b4e-3b99-49dc-964e-15f225e83228"}}};
+              //console.log(jsonData.wpDecorations.seriesName);
             const disneyparty = message.content.match(regex.disneyparty);
             if (disneyparty) {
               support = "Disney+";
@@ -95,11 +103,11 @@ module.exports = async (client) => {
                           "value": url
                         }
                       ],
-                      "image": {
+                      /*"image": {
                         "url": `https://gifdb.com/images/high/happy-minions-movie-night-cinema-f8b79qr9p5zjqybf.gif`,
                         "height": 0,
                         "width": 0
-                      },
+                      },*/
                       "thumbnail": {
                         "url": icon,
                         "height": 1,
