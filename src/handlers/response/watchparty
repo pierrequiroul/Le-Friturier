@@ -1,36 +1,61 @@
 const Discord = require('discord.js');
-const Triggers = require('../../database/models/triggers');
+const features = require('../../database/models/features');
 const puppeteer = require("puppeteer");
-
+//if(features.status.watchparty) {
 module.exports = async (client) => {
     const regex = {
         teleparty: /\bhttps?:\/\/redirect\.teleparty\.com\/join\/[a-f0-9]+\b/i,
         primeparty: /\bhttps?:\/\/(?:www\.)?(?:watchparty\.amazon|primevideo\.com)\/(?:[\w-]+\/)*amzn1\.dv\.wp\.room\.[\w-]+\b/i,
         watchpartyme: /\bhttps?:\/\/www\.watchparty\.me\/#[\w-]+\b/i,
-        disneyparty: /\bhttps?:\/\/www\.disneyplus\.com(?:\/\w{2}-\w{2})?\/groupwatch\/[\w-]+\b/i
+        disneyparty: /\bhttps?:\/\/www\.disneyplus\.com(?:\/\w{2}-\w{2})?\/groupwatch\/[\w-]+\b/i,
+        imgUrl: /(https?:\/\/.*\.(?:png|webp|jpg|jpeg|gif))/i
     };
     client.on(Discord.Events.MessageCreate, async (message) => {
         if (message.channel.type === Discord.ChannelType.DM) return;
         if (message.author.bot) return;
-        
+        console.log(message);
+        console.log(message.author);
         try {
             // Check if the message contains a Teleparty URL
             var support = "";
             var watchparty = false;
             var icon = "";
+            var cleanedMessage = message.content;
+            var color = 0xff0000;
+            var fields = [{
+              "name": "",
+              "value": ""
+            }];
+            var imageUrl = "";
+            if(regex.imgUrl.test(message.content)) {
+              var urlMatched = message.content.match(regex.imgUrl)
+              cleanedMessage = cleanedMessage.replace(regex.imgUrl, ``);
+              imageUrl = urlMatched[0];
+            }
+            const firstAttachment = message.attachments.first();
+            if (firstAttachment) {
+              imageUrl = firstAttachment.url
+            }
+
             const teleparty = message.content.match(regex.teleparty);
             if (teleparty)  {
               support = "Teleparty";
               url = teleparty[0];
               watchparty = true;
               icon = "https://play-lh.googleusercontent.com/5AJ3dpVdbd1S73OJxh-WQXAkWvz79cHBQa-i2h9DbMb1OcwgID-1I5SpHTwmhl1-Trc";
-            }
+              cleanedMessage = cleanedMessage.replace(regex.teleparty, `[\[lien\]](${url})`);
+              messageOnlyLink = regex.teleparty.test(cleanedMessage);
+              color = 0xE50914;
+            };
             const primeparty = message.content.match(regex.primeparty);
             if (primeparty) {
               support = "Prime Video";
               url = primeparty[0];
               watchparty = true;
               icon = "https://store-images.s-microsoft.com/image/apps.42667.14618985536919905.4b30e4f3-f7a1-4421-840c-2cc97b10e8e0.e2d07496-243f-458a-b5ef-e3249f7bb71f";
+              cleanedMessage = cleanedMessage.replace(regex.primeparty, `[\[lien\]](${url})`);
+              messageOnlyLink = regex.primeparty.test(cleanedMessage);
+              color = 0x00A8E1;
             };
             const disneyparty = message.content.match(regex.disneyparty);
             if (disneyparty) {
@@ -38,6 +63,9 @@ module.exports = async (client) => {
               url = disneyparty[0];
               watchparty = true;
               icon = "https://seeklogo.com/images/D/disney-logo-9649A88458-seeklogo.com.png";
+              cleanedMessage = cleanedMessage.replace(regex.disneyparty, `[\[lien\]](${url})`);
+              messageOnlyLink = regex.disneyparty.test(cleanedMessage);
+              color = 0x153866;
             };
             const watchpartyme = message.content.match(regex.watchpartyme);
             if (watchpartyme) {
@@ -45,8 +73,17 @@ module.exports = async (client) => {
               url = watchpartyme[0];
               watchparty = true;
               icon = "https://www.saashub.com/images/app/service_logos/183/j18sqik9nu3s/large.png?1626896447";
+              cleanedMessage = cleanedMessage.replace(regex.watchpartyme, `[\[lien\]](${url})`);
+              messageOnlyLink = regex.watchpartyme.test(cleanedMessage);
+              color = 0xff0000;
             };
-        
+
+            if (true) {
+              fields = [{
+                "name": ``,
+                "value": `> ${cleanedMessage}`
+              }]
+            }
             if (watchparty) {
                 /* Construct the embed message
                 const embed = new Discord.EmbedBuilder()
@@ -69,6 +106,7 @@ module.exports = async (client) => {
                   "channel_id": message.channel_id,
                   "content": "",
                   "tts": false,
+                  "attachments": message.attachments[0],
                   "components": [
                     {
                       "type": 1,
@@ -86,17 +124,16 @@ module.exports = async (client) => {
                   "embeds": [
                     {
                       "type": "rich",
-                      "title": `Invitation Watch Party`,
-                      "description": `\n\n**${message.author}** t'a invité à sa **Watch Party** sur **${support}** !`,
-                      "color": 0xff0000,
-                      "fields": [
-                        {
-                          "name": `Message`,
-                          "value": url
-                        }
-                      ],
+                      "title": ``,
+                      "description": `\n\n**${message.author}** t'a invité à regarder sur **${support}** !`,
+                      "color": color,
+                      "fields": fields,
+                      "author": {
+                        "name": "Watch Party",
+                        "icon_url": `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`
+                      },
                       "image": {
-                        "url": `https://gifdb.com/images/high/happy-minions-movie-night-cinema-f8b79qr9p5zjqybf.gif`,
+                        "url": imageUrl,
                         "height": 0,
                         "width": 0
                       },
@@ -108,7 +145,7 @@ module.exports = async (client) => {
                     }
                   ]
                 };
-                message.reply(embed);
+                message.channel.send(embed);
                 // Delete the original message
                 message.delete({ timeout: 5000 });
             }
@@ -156,3 +193,4 @@ module.exports = async (client) => {
         }
       }).setMaxListeners(0);*/
 };
+//}
