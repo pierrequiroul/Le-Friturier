@@ -1,7 +1,4 @@
 const Discord = require('discord.js');
-const features = require('../../database/models/features');
-const puppeteer = require("puppeteer");
-//if(features.status.watchparty) {
 module.exports = async (client) => {
     const regex = {
         teleparty: /\bhttps?:\/\/redirect\.teleparty\.com\/join\/[a-f0-9]+\b/i,
@@ -193,4 +190,3 @@ module.exports = async (client) => {
         }
       }).setMaxListeners(0);*/
 };
-//}
