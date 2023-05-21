@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 const axios = require('axios');
+const cheerio = require('cheerio');
+const https = require('https');
 module.exports = async (client) => {
     const regex = {
         teleparty: /\bhttps?:\/\/redirect\.teleparty\.com\/join\/[a-f0-9]+\b/i,
@@ -12,8 +14,9 @@ module.exports = async (client) => {
         if (message.channel.type === Discord.ChannelType.DM) return;
         if (message.author.bot) return;
         try {
-            // Check if the message contains a Teleparty URL
+            // Initialize the variables
             var support = "";
+            var videoId = "";
             var watchparty = false;
             var icon = "";
             var cleanedMessage = message.content;
@@ -25,141 +28,141 @@ module.exports = async (client) => {
             let title = '';
             var titleFound = false;
             var imageUrl = "";
-            if(regex.imgUrl.test(message.content)) {
-              var urlMatched = message.content.match(regex.imgUrl)
-              cleanedMessage = cleanedMessage.replace(regex.imgUrl, ``);
-              imageUrl = urlMatched[0];
-            }
-            const firstAttachment = message.attachments.first();
-            if (firstAttachment) {
-              imageUrl = firstAttachment.url
+
+            function fetchJsonData(url) {
+              return new Promise((resolve, reject) => {
+                https.get(url, (response) => {
+                  let data = '';
+            
+                  response.on('data', (chunk) => {
+                    data += chunk;
+                  });
+            
+                  response.on('end', () => {
+                    try {
+                      const jsonData = JSON.parse(data);
+                      resolve(jsonData);
+                    } catch (error) {
+                      reject(error);
+                    }
+                  });
+                }).on('error', (error) => {
+                  reject(error);
+                });
+              });
             }
 
+            function axiosHtml(url, selector) {
+              return new Promise((resolve, reject) => {
+                axios.get(url)
+                  .then(response => {
+                    const html = response.data;
+                    const $ = cheerio.load(html);
+                    resolve($(selector).text());
+                  })
+                  .catch(error => {
+                    reject("Une erreur s'est produite : " + error);
+                  });
+              });
+            }
+
+            
+
+
+            // Teleparty
             const teleparty = message.content.match(regex.teleparty);
-            if (teleparty)  {
+            if(teleparty){
               support = "Teleparty";
               url = teleparty[0];
               watchparty = true;
-              icon = "https://play-lh.googleusercontent.com/5AJ3dpVdbd1S73OJxh-WQXAkWvz79cHBQa-i2h9DbMb1OcwgID-1I5SpHTwmhl1-Trc";
+              var extractedValue = url.split("https://redirect.teleparty.com/join/")[1];
+              var finalUrl = "https://api.teleparty.com/video?session=" + extractedValue;
+              const jsonData = await fetchJsonData(finalUrl);
+              console.log(jsonData);
+              support = jsonData.videoService;
+              videoId = jsonData.videoId;
+            }
+            // Netflix
+            if (support == "netflix") {
               cleanedMessage = cleanedMessage.replace(regex.teleparty, `[\[lien\]](${url})`);
               messageOnlyLink = regex.teleparty.test(cleanedMessage);
-              color = 0xE50914;
-              /*
-              const scriptURLs = [];
-              const pattern = /^https:\/\/redirect\.teleparty\.com\/static\/js\//;
+              title = await axiosHtml("https://www.netflix.com/watch/" + videoId, 'h1.title-title');
+              if (title != undefined) titleFound = true;
+              console.log(title);
 
-              // Get the script URLs
-              const response = await axios.get(teleparty[0]);
-              const scripts = response.data.match(/<script src="(.*?)"/g);
-
-              if (scripts) {
-                scripts.forEach((script) => {
-                  const src = script.match(/<script src="(.*?)"/)[1];
-                  if (pattern.test(src)) {
-                    scriptURLs.push(src);
-                  }
-                });
-              }
-
-              for (const scriptURL of scriptURLs) {
-                const response = await axios.get(scriptURL);
-                const data = response.data;
-
-                const regex = /videoId:\s*"(\d+)",videoService:\s*"([^"]+)"/;
-                const match = regex.exec(data);
-
-                if (match) {
-                  const videoId = match[1];
-                  const videoService = match[2];
-
-                  console.log("videoId: " + videoId);
-                  console.log("videoService: " + videoService);
-
-                  if (videoService === "netflix") {
-                    const videoServiceUrl = "https://www.netflix.com/watch/" + videoId;
-                    console.log("videoServiceUrl: " + videoServiceUrl);
-
-                    const response = await axios.get(videoServiceUrl);
-                    const html = response.data;
-
-                    const titleRegex = /<h1 class="title-title" data-uia="title-info-title">(.*?)<\/h1>/;
-                    const titleMatch = titleRegex.exec(html);
-
-                    if (titleMatch) {
-                      const title = titleMatch[1];
-                      console.log("Title: " + title);
-                      // You can use the title here in your code
-                    } else {
-                      console.log("Title not found.");
-                    }
-                  }
-                } else {
-                  console.log("Data not found in the file.");
-                }
-              }*/
-
-            };
-            const primeparty = message.content.match(regex.primeparty);
-            if (primeparty) {
-              support = "Prime Video";
-              url = primeparty[0];
-              watchparty = true;
-              icon = "https://store-images.s-microsoft.com/image/apps.42667.14618985536919905.4b30e4f3-f7a1-4421-840c-2cc97b10e8e0.e2d07496-243f-458a-b5ef-e3249f7bb71f";
-              cleanedMessage = cleanedMessage.replace(regex.primeparty, `[\[lien\]](${url})`);
-              messageOnlyLink = regex.primeparty.test(cleanedMessage);
+              // Streaming platform parameters
+              support = "Netflix";
+              icon = "https://venturebeat.com/wp-content/uploads/2016/06/netflix-logo.png?w=1200&strip=all";
               color = 0x00A8E1;
             };
-            const disneyparty = message.content.match(regex.disneyparty);
-            if (disneyparty) {
-              support = "Disney+";
-              url = disneyparty[0];
+            // Primevideo
+            if (message.content.match(regex.primeparty) || support == "amazon") {
+              cleanedMessage = cleanedMessage.replace(regex.primeparty, `[\[lien\]](${url})`);
+              messageOnlyLink = regex.primeparty.test(cleanedMessage);
+              if (support == "amazon") {
+                title = await axiosHtml("https://www.primevideo.com/dp/" + videoId, 'h1[data-automation-id="title"]');
+                if (title != undefined) titleFound = true;
+                console.log(title);
+              }
+
+              // Streaming platform parameters
+              support = "Prime Video";
+              icon = "https://store-images.s-microsoft.com/image/apps.42667.14618985536919905.4b30e4f3-f7a1-4421-840c-2cc97b10e8e0.e2d07496-243f-458a-b5ef-e3249f7bb71f";
+              color = 0x00A8E1;
               watchparty = true;
-              icon = "https://seeklogo.com/images/D/disney-logo-9649A88458-seeklogo.com.png";
+              url = primeparty[0];
+            };
+            // Disney+
+            if (message.content.match(regex.disneyparty) || support == "disneyvideo") {
               cleanedMessage = cleanedMessage.replace(regex.disneyparty, `[\[lien\]](${url})`);
               messageOnlyLink = regex.disneyparty.test(cleanedMessage);
+
+              // Streaming platform parameters
+              support = "Disney+";
+              icon = "https://seeklogo.com/images/D/disney-logo-9649A88458-seeklogo.com.png";
               color = 0x153866;
-            };
-            const watchpartyme = message.content.match(regex.watchpartyme);
-            if (watchpartyme) {
-              support = "Watchparty.me";
-              url = watchpartyme[0];
               watchparty = true;
-              icon = "https://www.saashub.com/images/app/service_logos/183/j18sqik9nu3s/large.png?1626896447";
+              url = disneyparty[0];
+            };
+            // Watchparty.me
+            if (message.content.match(regex.watchpartyme) || support == "watch") {
               cleanedMessage = cleanedMessage.replace(regex.watchpartyme, `[\[lien\]](${url})`);
               messageOnlyLink = regex.watchpartyme.test(cleanedMessage);
+
+              // Streaming platform parameters
+              support = "Watchparty.me";
+              icon = "https://www.saashub.com/images/app/service_logos/183/j18sqik9nu3s/large.png?1626896447";
               color = 0xff0000;
+              watchparty = true;
+              url = watchpartyme[0];
             };
 
-            if (true) {
-              fields = [{
-                "name": ``,
-                "value": `> ${cleanedMessage}`
-              }]
-            }
+            if(imageUrl == "") {
+              if(regex.imgUrl.test(message.content)) {
+                var urlMatched = message.content.match(regex.imgUrl)
+                cleanedMessage = cleanedMessage.replace(regex.imgUrl, ``);
+                imageUrl = urlMatched[0];
+              }
+              const firstAttachment = message.attachments.first();
+              if (firstAttachment) {
+                imageUrl = firstAttachment.url
+              }
+            };
+
             if (watchparty) {
-                /* Construct the embed message
-                const embed = new Discord.EmbedBuilder()
-                    .setTitle('Invitation Watch Party')
-                    .setDescription(`**${message.author}** t'a invité à une Watch Party sur ${support}!`)
-                    .setTimestamp();
-                // Send the message with the embed and button
-                const row = new Discord.ActionRowBuilder()
-                    .addComponents(
-                        new Discord.ButtonBuilder()
-                        .setLabel('Rejoindre la Watch Party')
-                        .setStyle(5)
-                        .setURL(match[0]),
-                    );
-                const replyOptions = {
-                    allowedMentions: { repliedUser: true },
-                    components: [row],
-                };*/
+
                 if(titleFound) {
                   var embedDescription = `\n\n**${message.author}** t'a invité à regarder **${title}** sur **${support}** !`;
                 } else {
                   var embedDescription = `\n\n**${message.author}** t'a invité à regarder sur **${support}** !`;
                 }
-                
+                if (!messageOnlyLink) {
+                  fields = [{
+                    "name": ``,
+                    "value": `> ${cleanedMessage}`
+                  }]
+                };
+
                 embed = {
                   "channel_id": message.channel_id,
                   "content": "",
@@ -203,9 +206,10 @@ module.exports = async (client) => {
                     }
                   ]
                 };
+                message.delete({ timeout: 5000 });
                 message.channel.send(embed);
                 // Delete the original message
-                message.delete({ timeout: 5000 });
+                
             }
         } catch (err) {
             console.error(err);
