@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const axios = require('axios');
 module.exports = async (client) => {
     const regex = {
         teleparty: /\bhttps?:\/\/redirect\.teleparty\.com\/join\/[a-f0-9]+\b/i,
@@ -21,6 +22,8 @@ module.exports = async (client) => {
               "name": "",
               "value": ""
             }];
+            let title = '';
+            var titleFound = false;
             var imageUrl = "";
             if(regex.imgUrl.test(message.content)) {
               var urlMatched = message.content.match(regex.imgUrl)
@@ -41,6 +44,60 @@ module.exports = async (client) => {
               cleanedMessage = cleanedMessage.replace(regex.teleparty, `[\[lien\]](${url})`);
               messageOnlyLink = regex.teleparty.test(cleanedMessage);
               color = 0xE50914;
+              /*
+              const scriptURLs = [];
+              const pattern = /^https:\/\/redirect\.teleparty\.com\/static\/js\//;
+
+              // Get the script URLs
+              const response = await axios.get(teleparty[0]);
+              const scripts = response.data.match(/<script src="(.*?)"/g);
+
+              if (scripts) {
+                scripts.forEach((script) => {
+                  const src = script.match(/<script src="(.*?)"/)[1];
+                  if (pattern.test(src)) {
+                    scriptURLs.push(src);
+                  }
+                });
+              }
+
+              for (const scriptURL of scriptURLs) {
+                const response = await axios.get(scriptURL);
+                const data = response.data;
+
+                const regex = /videoId:\s*"(\d+)",videoService:\s*"([^"]+)"/;
+                const match = regex.exec(data);
+
+                if (match) {
+                  const videoId = match[1];
+                  const videoService = match[2];
+
+                  console.log("videoId: " + videoId);
+                  console.log("videoService: " + videoService);
+
+                  if (videoService === "netflix") {
+                    const videoServiceUrl = "https://www.netflix.com/watch/" + videoId;
+                    console.log("videoServiceUrl: " + videoServiceUrl);
+
+                    const response = await axios.get(videoServiceUrl);
+                    const html = response.data;
+
+                    const titleRegex = /<h1 class="title-title" data-uia="title-info-title">(.*?)<\/h1>/;
+                    const titleMatch = titleRegex.exec(html);
+
+                    if (titleMatch) {
+                      const title = titleMatch[1];
+                      console.log("Title: " + title);
+                      // You can use the title here in your code
+                    } else {
+                      console.log("Title not found.");
+                    }
+                  }
+                } else {
+                  console.log("Data not found in the file.");
+                }
+              }*/
+
             };
             const primeparty = message.content.match(regex.primeparty);
             if (primeparty) {
@@ -97,6 +154,12 @@ module.exports = async (client) => {
                     allowedMentions: { repliedUser: true },
                     components: [row],
                 };*/
+                if(titleFound) {
+                  var embedDescription = `\n\n**${message.author}** t'a invité à regarder **${title}** sur **${support}** !`;
+                } else {
+                  var embedDescription = `\n\n**${message.author}** t'a invité à regarder sur **${support}** !`;
+                }
+                
                 embed = {
                   "channel_id": message.channel_id,
                   "content": "",
@@ -120,7 +183,7 @@ module.exports = async (client) => {
                     {
                       "type": "rich",
                       "title": ``,
-                      "description": `\n\n**${message.author}** t'a invité à regarder sur **${support}** !`,
+                      "description": embedDescription,
                       "color": color,
                       "fields": fields,
                       "author": {
