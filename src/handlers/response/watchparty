@@ -69,6 +69,7 @@ module.exports = async (client) => {
                   })
                   .catch(error => {
                     reject(error);
+
                   });
               });
             }
@@ -141,6 +142,7 @@ module.exports = async (client) => {
                 } catch (error) {
                   console.log("Une erreur s'est produite :", error);
                 }
+
               } else {
                 // Native watchparty
                 url = message.content.match(regex.primeparty)[0];
@@ -181,6 +183,7 @@ module.exports = async (client) => {
                 } catch (error) {
                   console.log("Une erreur s'est produite :", error);
                 }
+
               } else {
                 // Native watchparty
                 url = message.content.match(regex.disneyparty)[0];
