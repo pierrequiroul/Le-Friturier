@@ -6,7 +6,7 @@ const https = require('https');
 module.exports = async (client) => {
     const regex = {
         teleparty: /\bhttps?:\/\/redirect\.teleparty\.com\/join\/[a-f0-9]+\b/i,
-        primeparty: /\bhttps?:\/\/(?:www\.)?(?:watchparty\.amazon|primevideo\.com)\/(?:[\w-]+\/)*amzn1\.dv\.wp\.room\.[\w-]+\b/i,
+        primeparty: /\b(?:https?:\/\/(?:www\.)?primevideo\.com\/watchparty\/amzn1\.dv\.wp\.room\.[a-f\d-]+|https?:\/\/watchparty\.amazon\/[a-z\d]+)\b/gim,
         primeparty2: /\bhttps:\/\/www\.primevideo\.com\/watchparty\//i,
         watchpartyme: /\bhttps:\/\/www\.watchparty\.me\/watch\//i,
         disneyparty: /\bhttps?:\/\/www\.disneyplus\.com(?:\/\w{2}-\w{2})?\/groupwatch\/[\w-]+\b/i,
