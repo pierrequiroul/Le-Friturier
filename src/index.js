@@ -159,6 +159,7 @@ const warnLogs = new Discord.WebhookClient({
   token: webhook.warnLogs.token,
 });
 
+
 process.on('unhandledRejection', error => {
   console.error('Unhandled promise rejection:', error);
   if (error) if (error.length > 950) error = error.slice(0, 950) + '... view console for details';

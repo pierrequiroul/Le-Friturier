@@ -217,6 +217,20 @@ module.exports = async (client, interaction) => {
     if (interaction.customId == "Bot_noticeTicket") {
         return require(`${process.cwd()}/src/commands/tickets/notice.js`)(client, interaction);
     }
+
+    if (!interaction.isAutocomplete()) {
+        return;
+
+    } else {
+        if (interaction.commandName === 'autocomplete') {
+            const focusedValue = interaction.options.getFocused();
+            const choices = ['faq', 'install', 'collection', 'promise', 'debug'];
+            const filtered = choices.filter(choice => choice.startsWith(focusedValue));
+            await interaction.respond(
+                filtered.map(choice => ({ name: choice, value: choice })),
+            );
+        }
+    }
 }
 
  
