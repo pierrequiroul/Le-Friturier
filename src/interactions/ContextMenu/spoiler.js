@@ -20,11 +20,10 @@ module.exports = {
     const user = interaction.member.user;
     const member = interaction.member;
     if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageMessages)) {
-      return interaction.reply({ content: 'You do not have the required permissions to use this command.', ephemeral: true });
+      return interaction.reply({ content: 'Tu ne possèdes pas la permission requise \`Gérer les messages\` pour effectuer cette action ', ephemeral: true });
     }
     await interaction.reply({
       "content": ' ',
-      "ephemeral": true,
       "embeds": [
         {
           "type": "rich",
@@ -49,7 +48,7 @@ module.exports = {
 
     collector.on('collect', async m => {
       if (m.content.trim().toLowerCase() === 'annuler') {
-        interaction.editReply({ content: 'Message spoiler annulé', ephemeral: true });
+        interaction.editReply({ content: 'Tu as annulé la mise en spoiler du message !', ephemeral: true });
         m.delete();
         return;
       }
@@ -101,45 +100,62 @@ module.exports = {
       console.log('No attachments found.');
     }
   }
+  const timestamp = message.createdTimestamp;
+  const date = new Date(timestamp);
+  const isoTimestamp = date.toISOString();
+  if (message.content == null || message.content == "") {
+    var fields = [
+      {
+        "name": ``,
+        "value": `**${message.author}** a posté une image spoiler à propos de **${context}**\n`
+      },
+      {
+        "name": ``,
+        "value": ` `
+      }
+    ]
+  } else {
+    var fields = [
+      {
+        "name": ``,
+        "value": `**${message.author}** a écris un spoiler à propos de **${context}**\n`
+      },
+      {
+        "name": ``,
+        "value": `> ||${message.content}||`
+      }
+    ]
+  }
     // https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp
       embed = {
         "channel_id": message.channel_id,
-        "content": `Spoiler de **${message.author}**\n\n> ${context}\n\n> ||${message.content}||
-        `,
+        "content": ``,
         "tts": false,
         "files": files,
         "allowedMentions": { repliedUser: false },
-        /*"embeds": [
+        "embeds": [
           {
             "type": "rich",
             "title": ``,
             "description": ``,
             "color": 0x153866,
-            "fields": [
-            {
-              "name": ``,
-              "value": `**${message.author} a écris**\n> ||${message.content}||`
-            },
-            {
-              "name": `Contexte`,
-              "value": `> ${context}`
-            }
-          ],
             "author": {
               "name": "Spoiler",
               "icon_url": `https://cdn.discordapp.com/avatars/${message.author.id}/${message.author.avatar}.webp`
-            }
+            },
+            "fields": fields,
+          "timestamp": isoTimestamp
           }
-        ]*/
+        ]
       };
-    interaction.followUp(embed);
+    interaction.editReply(embed);
     m.delete();
     message.delete({ timeout: 5000 })
   });
 
   collector.on('end', collected => {
     if (collected.size === 0) {
-      interaction.followUp('You did not provide additional context. Spoiler message canceled.');
+      interaction.followUp({ content: 'Tu n\'as pas fourni le contexte requis. Comment savoir de quoi parle le spoiler sinon?', ephemeral: true });
     }
   });
 },
