@@ -15,11 +15,19 @@ const YTDlpWrap = require("yt-dlp-wrap").default;
 const ytDlpWrap = new YTDlpWrap(config.YT_DLP_PATH);
 const ffmpeg = require('fluent-ffmpeg');
 
+/*
+  fix first response
+  send temp reponse loading
+  social media personnalisation
+
+*/
+
+
 module.exports = async (client) => {
     const filesizeLimit = {
-        default: 8 * 1024 * 1024 - 1000, // reserve 1KB for the message body
+        default: 25 * 1024 * 1024 - 1000, // reserve 1KB for the message body
         tier2: 50 * 1024 * 1024 - 1000,
-        tier3: 100 * 1024 * 1024 - 1000
+        tier3: 500 * 1024 * 1024 - 1000
     };
     
     let cooldown_users = new Set();
@@ -48,7 +56,8 @@ module.exports = async (client) => {
                 message.channel.sendTyping().catch(console.error);
 
                 try {
-                    const direct_url = await get_video_url(url);
+                    const videoMetadatas = await get_video_url(url);
+                    const direct_url = videoMetadatas.formats[0].url;
                     await process_video_url(message, url, direct_url);
                 } catch (err) {
                     report_error(message, url, err);
@@ -128,7 +137,7 @@ module.exports = async (client) => {
             options = [url, "-f", "best[vcodec=h264]"];
         }
         let metadata = await ytDlpWrap.getVideoInfo(options);
-        return metadata.formats[0].url;
+        return metadata;
     }
 
     // Sends raw video url to 8mb.video for compression
@@ -184,8 +193,13 @@ module.exports = async (client) => {
                 method: 'get', // specify the HTTP method
                 url: direct_url,
             });
-    
+
             let too_large = is_too_large_attachment(message.guild, axios_response);
+            if (!too_large) {
+                reply_video(message, axios_response.data);
+            }
+            
+            /*let too_large = is_too_large_attachment(message.guild, axios_response);
     
             if (too_large && !config.BOOSTED_CHANNEL_ID) {
                 // no channel set from which to borrow file size limits
@@ -216,7 +230,7 @@ module.exports = async (client) => {
                 }
             } else {
                 reply_video(message, axios_response.data);
-            }
+            }*/
         } catch (err) {
             report_error(message, url, err); // if the request failed
         }
@@ -227,15 +241,77 @@ module.exports = async (client) => {
     // MESSAGES
     // Reply with video
     function reply_video(message, video) {
-        message.reply({
-            files: [
-                {
-                    attachment: video,
-                    name: `${Date.now()}.mp4`,
+        let generatedEmbeds =
+            {
+                "type": "rich",
+                "title": "sdsd",
+                "url": ``,
+                "description": "sd",
+                "color": "ffffff",
+                "fields": [
+                    {
+                        "name": "Auteur",
+                        "value": "sd",
+                        "inline": true
+                    }
+                ],
+                "author": {
+                    "name": "",
+                    "icon_url": ""
                 },
-            ],
-            allowedMentions: { repliedUser: false },
-        }).catch(console.error); // if sending of the Discord message itself failed, just log error to console
+                "image": {
+                    "url": "",
+                    "height": 0,
+                    "width": 0
+                },
+                "thumbnail": {
+                    "url": "",
+                    "height": 1,
+                    "width": 1
+                },
+                "footer": {
+                    "text": ""
+                  },
+                "timestamp": ""
+            };
+
+        let repond = [
+            {
+                "content": "",
+                //"allowedMentions": { "repliedUser": true },
+                "tts": false,
+                "embeds": generatedEmbeds
+            },
+            {
+                "content": "",
+                "tts": false,
+                "files": [
+                    {
+                        "attachment": video,
+                        "name": `${Date.now()}.mp4`,
+                    },
+                ],
+                "components": [
+                    {
+                        "type": 1,
+                        "components": [
+                            {
+                            "style": 5,
+                            "label": `Voir le Tiktok`,
+                            "url": "http://google.com",
+                            "disabled": false,
+                            "type": 2
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+
+        message.reply(repond[0]).catch(console.error); 
+        message.reply(repond[1]).catch(console.error); // if sending of the Discord message itself failed, just log error to console
+
+        
     }
 
     // Reply that video is being compressed then delete is after 50 seconds
