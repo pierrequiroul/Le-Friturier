@@ -36,6 +36,7 @@
     "canvas": "^2.11.2",
     "chalk": "^2.4.2",
     "cheerio": "^1.0.0-rc.12",
+    "child_process": "^1.0.2",
     "discord-giveaways": "^6.0.1",
     "discord-image-generation": "^1.4.23",
     "discord.js": "^14.8.0",
@@ -49,6 +50,7 @@
     "express": "^4.18.2",
     "ffmpeg-static": "^5.1.0",
     "figlet": "^1.5.2",
+    "fluent-ffmpeg": "^2.1.3",
     "fs": "^0.0.1-security",
     "generate-password": "^1.7.0",
     "giphy-api": "^2.0.2",
@@ -68,6 +70,7 @@
     "ms": "^2.1.3",
     "node-fetch": "^2.6.6",
     "parse-ms": "^2.1.0",
+    "path": "^0.12.7",
     "popcat-wrapper": "^1.5.4",
     "puppeteer": "^20.2.1",
     "request": "^2.88.2",
@@ -75,8 +78,10 @@
     "sourcebin": "^5.0.0",
     "src": "^1.1.2",
     "topgg-autoposter": "^2.0.1",
+    "url-regex-safe": "^4.0.0",
     "util": "^0.12.5",
     "weather-js": "^2.0.0",
+    "yt-dlp-wrap": "^2.3.12",
     "ytdl-core": "^4.11.4"
   }
 }
