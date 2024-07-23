@@ -25,8 +25,6 @@ module.exports = async (client) => {
 
     let cooldown_users = new Set();
     let supress_embeds = new Set();
-    
-    var embed_colour = [158, 200, 221];
 
     client.on(Discord.Events.MessageCreate, async (message) => {
         if (!message.content || message.author.bot || cooldown_users.has(message.author.id)) return;
@@ -81,13 +79,7 @@ module.exports = async (client) => {
         }
     }).setMaxListeners(0);
 
-    function embed_message(title, desc) {
-        return new Discord.EmbedBuilder()
-            .setColor(embed_colour)
-            .setTitle(title)
-            .setDescription(desc)
-            .setTimestamp();
-    }
+
 
     client.on("messageUpdate", (old_message, new_message) => {
         if (!supress_embeds.has(new_message.id)) return;
@@ -112,7 +104,7 @@ module.exports = async (client) => {
         return await ytDlpWrap.getVideoInfo(options);
     }
 
-    async function compress_direct_url(inputUrl, maxFileSize) {
+    async function compress_direct_url(inputUrl) {
         return new Promise((resolve, reject) => {
             const outputPath = path.join(__dirname, '..', '..', 'assets', 'utils', 'temp', 'compressed_output.mp4');
     
@@ -144,27 +136,6 @@ module.exports = async (client) => {
         }
         const too_large = stream.data.length >= limit;
         return { too_large, limit };
-    }
-
-    async function axiosGetWithRetry(url, retries = 3) {
-        for (let i = 0; i < retries; i++) {
-            try {
-                const response = await axios.get(url, {
-                    headers: {
-                        'Cache-Control': 'no-cache',
-                        'Pragma': 'no-cache',
-                        'Expires': '0',
-                    },
-                    responseType: 'arraybuffer',
-                });
-                return response;
-            } catch (err) {
-                if (i === retries - 1 || (err.response && err.response.status === 403)) {
-                    throw err;
-                }
-                await new Promise(resolve => setTimeout(resolve, 1000)); // wait for 1 second before retrying
-            }
-        }
     }
     
     async function process_video_url(message, url, direct_url) {
@@ -229,11 +200,6 @@ module.exports = async (client) => {
 
     function report_error(message, url, error) {
         const embed = embed_message("Error", `${url}\n\nThere was a problem trying to download this video :( \n\nLogs:\n\`${error}\``);
-        message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).catch(console.error);
-    }
-
-    function report_filesize_error(message) {
-        const embed = embed_message("File limit Exceeded", "Uh oh! This video exceeds the file limit Discord allows :/");
         message.reply({ embeds: [embed], allowedMentions: { repliedUser: false } }).catch(console.error);
     }
 
