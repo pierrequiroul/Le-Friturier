@@ -166,7 +166,7 @@ async function clearOldEventsFromDatabase(client) {
                                 const discordEvent = await guild.scheduledEvents.fetch(eventThread.eventId);
                                 
                                 if (discordEvent) {
-                                    eventThread.scheduledStartTimestamp = Math.floor(discordEvent.scheduledStartTimestamp / 1000);
+                                    eventThread.scheduledStartTimestamp = discordEvent.scheduledStartTimestamp;
                                     
                                     // Mettre à jour la base de données avec le nouveau timestamp
                                     await AnnouncementChannels.updateOne(
