@@ -159,6 +159,7 @@ class ReminderManager {
                         // Vérifier si le thread existe et est accessible
                         const thread = await client.channels.fetch(eventThread.threadId).catch(() => null);
                         if (!thread?.isThread() || !thread?.sendable) continue;
+                        if (!eventThread.scheduledStartTimestamp) continue;
 
                         const timeUntilEvent = eventThread.scheduledStartTimestamp - this.now;
 

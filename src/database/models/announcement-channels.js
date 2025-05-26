@@ -157,7 +157,7 @@ async function clearOldEventsFromDatabase(client) {
                 for (const eventThread of guildData.EventThreads) {
                     try {
                         totalEventsProcessed++;
-                        const timeSinceEvent = Math.abs(now - eventThread.scheduledStartTimestamp);
+                        const timeSinceEvent = now - eventThread.scheduledStartTimestamp;
                         
                         // Si le timestamp est null ou undefined, on le récupère depuis Discord
                         if (!eventThread.scheduledStartTimestamp) {
