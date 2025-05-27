@@ -1,8 +1,10 @@
 const Discord = require('discord.js');
 const chalk = require('chalk');
 const Schema = require('../../database/models/channelActivity');
+const voiceCleanup = require('../../assets/utils/voiceCleanup');
 const { model: AnnouncementChannels, clearOldEventsFromDatabase } = require('../../database/models/announcement-channels');
 const { ReminderManager, createManager } = require('../../handlers/functions/eventReminders');
+
 
 module.exports = async (client) => {
     const channelSorter = require('../../handlers/functions/channelSorter')(client);
@@ -29,6 +31,9 @@ module.exports = async (client) => {
         console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Erreur lors de la vérification initiale des rappels:`));
         console.error(error);
     });
+  
+    // Cleanup voice role  
+    await voiceCleanup(client);
 
     console.log(`\u001b[0m`);
     console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Shard #${client.shard.ids[0] + 1}`), chalk.green(`is ready!`));
@@ -46,7 +51,6 @@ module.exports = async (client) => {
         username: 'Bot Logs',
         embeds: [embed],
     });
-
 
     setInterval(async function () {
         const promises = [

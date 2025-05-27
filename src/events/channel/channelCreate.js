@@ -1,4 +1,5 @@
 const discord = require('discord.js');
+const voiceRoles = require("../../database/models/voiceRoles");
 
 module.exports = async (client, channel) => {
     let types = {
@@ -15,6 +16,29 @@ module.exports = async (client, channel) => {
 
     const logsChannel = await client.getLogs(channel.guild.id);
     if (!logsChannel) return;
+
+    // Vérifier si le salon créé est un salon vocal
+    if (channel.type !== Discord.ChannelType.GuildVoice) return;
+
+    try {
+        // Créer un rôle avec le même nom que le salon vocal
+        const role = await channel.guild.roles.create({
+            name: `🔊 ${channel.name}`,
+            color: 'Blue',
+            reason: 'Rôle automatique pour salon vocal'
+        });
+
+        // Sauvegarder dans la base de données
+        await new voiceRoles({
+            Guild: channel.guild.id,
+            VoiceChannel: channel.id,
+            Role: role.id
+        }).save();
+
+        console.log(`[Voice Roles] Rôle ${role.name} créé et associé au salon ${channel.name}`);
+    } catch (error) {
+        console.error("[Voice Roles] Erreur lors de la création automatique du rôle:", error);
+    }
 
     console.log(channel.type)
     client.embed({
