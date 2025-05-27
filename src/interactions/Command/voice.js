@@ -10,8 +10,7 @@ module.exports = {
             subcommand
                 .setName('help')
                 .setDescription('Get information about the voice category commands')
-        )
-        .addSubcommand(subcommand =>
+        ).addSubcommand(subcommand =>
             subcommand
                 .setName('limit')
                 .setDescription('Limit your custom voice channel')
@@ -42,7 +41,7 @@ module.exports = {
      */
 
     run: async (client, interaction, args) => {
-        await interaction.deferReply({ fetchReply: true });
+        await interaction.deferReply({ fetchReply: true, ephemeral: true });
         client.loadSubcommands(client, interaction, args);
     },
 };
