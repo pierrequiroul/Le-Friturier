@@ -61,6 +61,7 @@ module.exports = {
         .addSubcommand(subcommand => subcommand
             .setName('random')
             .setDescription('Move a random number of members from a voice channel to another voice channel')
+            .setDescriptionLocalization('fr', 'Déplace un nombre aléatoire de membres d\'un salon vocal vers un autre salon vocal')
             .addIntegerOption(option => option.setName('amount')
                 .setDescription('Number of members to move (randomly selected)')
                 .setDescriptionLocalization('fr', 'Nombre de membres à déplacer (sélection aléatoire)')
