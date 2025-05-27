@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const chalk = require('chalk');
 const Schema = require('../../database/models/channelActivity');
+const voiceCleanup = require('../../assets/utils/voiceCleanup');
 
 module.exports = async (client) => {
     const channelSorter = require('../../handlers/functions/channelSorter')(client);
@@ -26,6 +27,8 @@ module.exports = async (client) => {
         username: 'Bot Logs',
         embeds: [embed],
     });
+
+    await voiceCleanup(client);
 
     setInterval(async function () {
         const promises = [
