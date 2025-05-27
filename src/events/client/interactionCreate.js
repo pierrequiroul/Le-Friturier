@@ -12,6 +12,42 @@ const { ReminderManager, createManager } = require("../../handlers/functions/eve
 module.exports = async (client, interaction) => {
     const reminderManager = createManager();
 
+    /*
+    if (
+        interaction.isAutocomplete() &&
+        interaction.commandName === 'voice' &&
+        interaction.options.getSubcommand() === 'move'
+    ) {
+        const focused = interaction.options.getFocused(true);
+    
+        if (focused.name !== 'vers') return;
+    
+        const explicitStartChannel = interaction.options.getChannel('de');
+        const fallbackStartChannel = interaction.member.voice.channel;
+        const startChannel = explicitStartChannel ?? fallbackStartChannel;
+    
+        if (!startChannel || startChannel.type !== Discord.ChannelType.GuildVoice) {
+            return interaction.respond([{ name: 'Aucun salon de référence', value: 'none' }]);
+        }
+    
+        const allVoiceChannels = interaction.guild.channels.cache
+            .filter(c => c.type === Discord.ChannelType.GuildVoice);
+    
+        const filtered = allVoiceChannels
+            .filter(c =>
+                // on exclut uniquement si l'utilisateur a explicitement fourni start_channel
+                (!explicitStartChannel || c.id !== startChannel.id) &&
+                c.name.toLowerCase().includes(focused.value.toLowerCase())
+            )
+            .map(c => ({
+                name: c.name,
+                value: c.id
+            }))
+            .slice(0, 25);
+    
+        return interaction.respond(filtered);
+    }*/
+
     // Commands
     if (interaction.isCommand() || interaction.isUserContextMenuCommand()) {
         banSchema.findOne({ User: interaction.user.id }, async (err, data) => {
