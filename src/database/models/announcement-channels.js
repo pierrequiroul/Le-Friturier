@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const { Client } = require('discord.js');
+const { Client, Events, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { generateCalendarLinks } = require('../../assets/utils/calendar');
 const chalk = require('chalk');
 
 // Définir le sous-schéma pour un rappel individuel
@@ -193,7 +194,7 @@ async function clearOldEventsFromDatabase(client) {
                         }
 
                         // Si l'événement est trop vieux, on passe au suivant sans l'ajouter à updatedEvents
-                        if (timeSinceEvent >= ONE_MONTH) {
+                        if (timeSinceEvent >= ONE_MONTH && eventThread.scheduledStartTimestamp) {
                             console.log(chalk.blue(chalk.bold(`Cleanup`)), (chalk.white(`>>`)), chalk.yellow(`Removing old event ${eventThread.eventName} from guild ${guildData.Guild} (${Math.floor(timeSinceEvent / 60000)} minutes old)`));
                             totalEventsRemoved++;
                             continue;
@@ -204,23 +205,68 @@ async function clearOldEventsFromDatabase(client) {
                             try {
                                 const discordEvent = await discordGuild.scheduledEvents.fetch(eventThread.eventId);
                                 if (discordEvent) {
-                                    const newDescription = (discordEvent.description || "") + ".";
-                                    await discordEvent.edit({
-                                        description: newDescription
-                                    });
-                                    console.log(chalk.blue(chalk.bold(`Cleanup`)), (chalk.white(`>>`)), chalk.green(`Updated description for event ${eventThread.eventName}`));
-                                    
-                                    // Mettre à jour la version de l'événement
+                                    // 1. Mettre à jour la description dans Discord
+                                    //const newDescription = (discordEvent.description || "") + ".";
+                                    //await discordEvent.edit({ description: newDescription });
+                        
+                                    // 2. Mettre à jour le followupMessage dans le thread
+                                    const thread = await client.channels.fetch(eventThread.threadId).catch(() => null);
+                                    if (thread?.isThread() && eventThread.followupMessageId) {
+                                        const followupMessage = await thread.messages.fetch(eventThread.followupMessageId).catch(() => null);
+                                        if (followupMessage) {
+                                            const start = discordEvent.scheduledStartTimestamp;
+                                            const end = discordEvent.scheduledEndTimestamp || (start + 60 * 60 * 1000);
+                                            const calendarLinks = generateCalendarLinks({
+                                                title: discordEvent.name,
+                                                description: discordEvent.description,
+                                                location: discordEvent.entityMetadata.location,
+                                                startDate: new Date(start).toISOString(),
+                                                endDate: new Date(end).toISOString()
+                                            });
+                                            const calendarButton = new ActionRowBuilder()
+                                            .addComponents(
+                                                new ButtonBuilder()
+                                                    .setLabel('Ajouter à Google agenda')
+                                                    .setStyle(ButtonStyle.Link)
+                                                    .setURL(calendarLinks.google)
+                                            )
+                                            .addComponents(
+                                                new ButtonBuilder()
+                                                    .setLabel('Ajouter à Outlook')
+                                                    .setStyle(ButtonStyle.Link)
+                                                    .setURL(calendarLinks.outlook)
+                                            );
+                                            const embed = new EmbedBuilder()
+                                                .setTitle("\`📌\`  Informations importantes")
+                                                .setDescription(discordEvent.description) // Utiliser la nouvelle description
+                                                .setColor(0x0099FF)
+                                                .setTimestamp(new Date(eventThread.scheduledStartTimestamp))
+                                            
+                                                if (discordEvent.creator) {
+                                                    embed.setFooter({ 
+                                                        text: discordEvent.creator.globalName || discordEvent.creator.username || discordEvent.creator.tag,
+                                                        iconURL: discordEvent.creator.avatarURL() 
+                                                    });
+                                                } else if (discordEvent.creatorId) {
+                                                    const creator = await client.users.fetch(discordEvent.creatorId).catch(() => null);
+                                                    if (creator) {
+                                                        embed.setFooter({ 
+                                                            text: creator.globalName || creator.username || creator.tag,
+                                                            iconURL: creator.avatarURL() 
+                                                        });
+                                                    }
+                                                }
+                                            await followupMessage.edit({ content: "", embeds: [embed], components: [calendarButton] });
+                                            console.log(chalk.green(`Updated followupMessage for ${eventThread.eventName}`));
+                                        }
+                                    }
+                        
+                                    // 3. Mettre à jour la version
                                     eventThread.version = 2;
                                     hasUpdates = true;
                                 }
-                            } catch (eventError) {
-                                if (eventError.code === 10008) { // Unknown Event
-                                    console.log(chalk.blue(chalk.bold(`Cleanup`)), (chalk.white(`>>`)), chalk.yellow(`Event ${eventThread.eventName} no longer exists in Discord, removing`));
-                                    totalEventsRemoved++;
-                                    continue;
-                                }
-                                console.error(chalk.blue(chalk.bold(`Cleanup`)), (chalk.white(`>>`)), chalk.red(`Failed to update event ${eventThread.eventName}:`), eventError);
+                            } catch (error) {
+                                console.error(`Failed to update event ${eventThread.eventName}:`, error);
                             }
                         }
 
