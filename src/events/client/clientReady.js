@@ -4,11 +4,13 @@ const Schema = require('../../database/models/channelActivity');
 const voiceCleanup = require('../../assets/utils/voiceCleanup');
 const { model: AnnouncementChannels, clearOldEventsFromDatabase } = require('../../database/models/announcement-channels');
 const { ReminderManager, createManager } = require('../../handlers/functions/eventReminders');
+const statistics = require('../../handlers/functions/statistics');
 
 
 module.exports = async (client) => {
     const channelSorter = require('../../handlers/functions/channelSorter')(client);
     const reminderManager = createManager();
+    const statisticsManager = statistics.createManager();
 
     const startLogs = new Discord.WebhookClient({
         id: client.webhooks.startLogs.id,
@@ -62,7 +64,10 @@ module.exports = async (client) => {
                 ))
             ),
             // Vérification des rappels d'événements
-            reminderManager.checkEventReminders(client)
+            reminderManager.checkEventReminders(client),
+            
+            // Track voice activity for each voice channel
+            statisticsManager.trackAllVoiceActivity(client)
         ];
         return Promise.all(promises)
             .then(results => {
@@ -116,7 +121,7 @@ module.exports = async (client) => {
             .catch(error => {
                 console.error('Error in interval:', error);
             });
-    }, 50000);
+    }, 60000);
 
     client.player.init(client.user.id);
 };
