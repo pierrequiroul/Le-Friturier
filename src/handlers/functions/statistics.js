@@ -3,7 +3,7 @@ const chalk = require('chalk');
 class StatisticsManager {
     constructor() {
         // Ensure the API URL has a protocol
-        const baseUrl = process.env.STATS_API_URL || 'http://localhost:3000/api/stats';
+        const baseUrl = process.env.STATS_API_URL || 'http://localhost:3000/api';
         this.API_BASE_URL = baseUrl.startsWith('http://') || baseUrl.startsWith('https://')
             ? baseUrl
             : `http://${baseUrl}`;
@@ -86,7 +86,10 @@ class StatisticsManager {
                 try {
                     await this.fetch(`${this.API_BASE_URL}/voice/${guildId}`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'x-api-key': process.env.STATS_API_KEY
+                         },
                         body: JSON.stringify({ channels })
                     });
                     
