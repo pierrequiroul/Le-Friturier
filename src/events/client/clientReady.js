@@ -12,6 +12,9 @@ module.exports = async (client) => {
     const reminderManager = createManager();
     const statisticsManager = statistics.createManager();
 
+    // Debug: confirm clientReady handler started
+    console.log(chalk.blue(chalk.bold('System')), chalk.white('>>'), chalk.green('clientReady handler start'));
+
     const startLogs = new Discord.WebhookClient({
         id: client.webhooks.startLogs.id,
         token: client.webhooks.startLogs.token,
@@ -34,12 +37,26 @@ module.exports = async (client) => {
         console.error(error);
     });
   
-    // Cleanup voice role  
-    await voiceCleanup(client);
+    // Cleanup voice role
+    try {
+        await voiceCleanup(client);
+    } catch (err) {
+        console.error(chalk.blue(chalk.bold('Voice Cleanup')), chalk.white('>>'), chalk.red('voiceCleanup threw an error but startup will continue:'), err);
+    }
 
     console.log(`\u001b[0m`);
     console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Shard #${client.shard.ids[0] + 1}`), chalk.green(`is ready!`));
     console.log(chalk.blue(chalk.bold(`Bot`)), (chalk.white(`>>`)), chalk.green(`Started on`), chalk.red(`${client.guilds.cache.size}`), chalk.green(`servers!`));
+
+    // Debug: run an initial tracking pass immediately to verify the scheduler and fetches
+    try {
+        console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('Running initial trackAllVoiceActivity now'));
+        // createManager returns a StatisticsManager instance whose method accepts (client)
+        await statisticsManager.trackAllVoiceActivity(client);
+        console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('Initial trackAllVoiceActivity completed'));
+    } catch (err) {
+        console.error(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.red('Initial trackAllVoiceActivity failed:'), err);
+    }
 
     let embed = new Discord.EmbedBuilder()
         .setTitle(`🆙・Finishing shard`)

@@ -67,9 +67,11 @@ class StatisticsManager {
 
     async trackAllVoiceActivity(client) {
         if (this.errorCount === 0) {
-            //console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('Starting voice activity tracking...'));
+            // Verbose invocation log to confirm the scheduler is running
+            console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('trackAllVoiceActivity invoked'));
         }
 
+        let processedGuilds = 0;
         for (const [guildId, guild] of client.guilds.cache) {
             const voiceChannels = guild.channels.cache.filter(
                 channel => channel.type === 2 && channel.members.size > 0 // 2 is GUILD_VOICE
@@ -93,15 +95,30 @@ class StatisticsManager {
 
             // Envoyer toutes les données des canaux vocaux du serveur en une seule requête
             if (channels.length > 0) {
+                processedGuilds++;
+                // Log the outgoing attempt for visibility in runtime logs
                 try {
-                    await this.fetch(`${this.API_BASE_URL}/voice/${guildId}`, {
+                    //console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green(`Sending ${channels.length} channel(s) for guild:`), chalk.yellow(guild.name || guildId), chalk.green(`(${guildId})`));
+                } catch (e) {
+                    // Fallback logging if guild.name access fails
+                    //console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green(`Sending ${channels.length} channel(s) for guild id:`), chalk.yellow(guildId));
+                }
+                try {
+                    const response = await this.fetch(`${this.API_BASE_URL}/voice/${guildId}`, {
                         method: 'POST',
                         headers: { 
                             'Content-Type': 'application/json',
                             'x-api-key': process.env.STATS_API_KEY
-                         },
+                        },
                         body: JSON.stringify({ channels })
                     });
+
+                    // Log non-2xx responses to help debug why data isn't persisted
+                    if (!response.ok) {
+                        let text = '';
+                        try { text = await response.text(); } catch (e) { text = '<no body>'; }
+                        console.error(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.red(`API responded ${response.status} ${response.statusText} for /voice/${guildId}: ${text}`));
+                    }
                     
                     if (this.errorCount > 0) {
                         // Si on réussit après des erreurs, on réinitialise les compteurs
@@ -122,6 +139,11 @@ class StatisticsManager {
                     this.handleError(error, 'voice activity');
                 }
             }
+        }
+
+        // Summary log to show how many guilds triggered POSTs this run
+        if (this.errorCount === 0) {
+            //console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green(`trackAllVoiceActivity completed — POSTed for ${processedGuilds} guild(s)`));
         }
     }
 }
