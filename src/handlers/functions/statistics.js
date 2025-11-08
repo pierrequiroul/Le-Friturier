@@ -96,7 +96,10 @@ class StatisticsManager {
                 try {
                     await this.fetch(`${this.API_BASE_URL}/voice/${guildId}`, {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'x-api-key': process.env.STATS_API_KEY
+                         },
                         body: JSON.stringify({ channels })
                     });
                     
