@@ -36,17 +36,17 @@ module.exports = async (client) => {
         console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Erreur lors de la vérification initiale des rappels:`));
         console.error(error);
     });
-  
+
+    console.log(`\u001b[0m`);
+    console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Shard #${client.shard.ids[0] + 1}`), chalk.green(`is ready!`));
+    console.log(chalk.blue(chalk.bold(`Bot`)), (chalk.white(`>>`)), chalk.green(`Started on`), chalk.red(`${client.guilds.cache.size}`), chalk.green(`servers!`));
+
     // Cleanup voice role
     try {
         await voiceCleanup(client);
     } catch (err) {
         console.error(chalk.blue(chalk.bold('Voice Cleanup')), chalk.white('>>'), chalk.red('voiceCleanup threw an error but startup will continue:'), err);
     }
-
-    console.log(`\u001b[0m`);
-    console.log(chalk.blue(chalk.bold(`System`)), (chalk.white(`>>`)), chalk.red(`Shard #${client.shard.ids[0] + 1}`), chalk.green(`is ready!`));
-    console.log(chalk.blue(chalk.bold(`Bot`)), (chalk.white(`>>`)), chalk.green(`Started on`), chalk.red(`${client.guilds.cache.size}`), chalk.green(`servers!`));
 
     // Debug: run an initial tracking pass immediately to verify the scheduler and fetches
     try {
