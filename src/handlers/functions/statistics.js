@@ -68,7 +68,7 @@ class StatisticsManager {
     async trackAllVoiceActivity(client) {
         if (this.errorCount === 0) {
             // Verbose invocation log to confirm the scheduler is running
-            console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('trackAllVoiceActivity invoked'));
+            //console.log(chalk.blue(chalk.bold('Statistics')), chalk.white('>>'), chalk.green('trackAllVoiceActivity invoked'));
         }
 
         let processedGuilds = 0;
