@@ -1,0 +1,15 @@
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+README.md
+LICENSE
+.vscode
+.DS_Store
+*.log
+.replit
+replit.nix
+start.bat
+start.sh
+Dockerfile
