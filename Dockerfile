@@ -30,7 +30,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # Installer les dépendances
-RUN npm ci --only=production
+RUN npm install --omit=dev
 
 # Copier le reste de l'application
 COPY . .

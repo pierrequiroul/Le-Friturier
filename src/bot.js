@@ -223,3 +223,20 @@ client.on(Discord.ShardEvents.Error, error => {
         embeds: [embed],
     });
 });
+
+// Healthcheck : créer un fichier pour indiquer que le bot est actif
+// Ce fichier sera vérifié par le Docker healthcheck
+const healthcheckFile = '/tmp/bot-alive';
+function updateHealthcheck() {
+    try {
+        fs.writeFileSync(healthcheckFile, new Date().toISOString(), 'utf8');
+    } catch (err) {
+        console.error('Erreur lors de la mise à jour du healthcheck:', err);
+    }
+}
+
+// Mettre à jour le healthcheck toutes les 30 secondes
+setInterval(updateHealthcheck, 30000);
+
+// Créer le fichier initial au démarrage
+updateHealthcheck();
